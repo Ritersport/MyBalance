@@ -4,5 +4,5 @@ import com.ritesrport.mybalance.domain.entity.Account
 import kotlinx.coroutines.flow.Flow
 
 interface AccountRepository {
-    suspend fun getAccount(accountId: Long): Flow<Account>
+    fun getAccount(accountId: Long): Flow<Account>
 }

@@ -5,7 +5,7 @@ import com.ritesrport.mybalance.domain.entity.Transaction
 import kotlinx.coroutines.flow.Flow
 
 class GetTransactionsUseCase(private val repository: TransactionRepository) {
-    suspend operator fun invoke(): Flow<List<Transaction>> {
+    operator fun invoke(): Flow<List<Transaction>> {
         return repository.getTransactions()
     }
 }

@@ -10,7 +10,7 @@ class GetBalanceUseCase(
     private val transactionRepository: TransactionRepository,
     private val accountRepository: AccountRepository
 ) {
-    suspend operator fun invoke(accountId: Long): Flow<BigDecimal> {
+    operator fun invoke(accountId: Long): Flow<BigDecimal> {
         return combine(
             accountRepository.getAccount(accountId),
             transactionRepository.getTransactionsForAccount(accountId)

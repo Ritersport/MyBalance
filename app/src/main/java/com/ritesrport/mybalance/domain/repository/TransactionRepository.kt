@@ -5,6 +5,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface TransactionRepository {
     suspend fun addTransaction(transaction: Transaction)
-    suspend fun getTransactions(): Flow<List<Transaction>>
-    suspend fun getTransactionsForAccount(accountId: Long): Flow<List<Transaction>>
+    fun getTransactions(): Flow<List<Transaction>>
+    fun getTransactionsForAccount(accountId: Long): Flow<List<Transaction>>
 }
