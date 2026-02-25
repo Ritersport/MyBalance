@@ -1,10 +1,7 @@
 package com.ritesrport.mybalance.domain.entity
 
-import java.math.BigDecimal
-
-data class Account(
+data class Category(
     val id: Long,
     val name: String,
-    val initialBalance: BigDecimal,
     val icon: IconKey
 )
