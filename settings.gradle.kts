@@ -21,4 +21,8 @@ dependencyResolutionManagement {
 
 rootProject.name = "MyBalance"
 include(":app")
- 
+include(":core:DataBase")
+include(":core:DesignSystem")
+include(":features:AddTransaction")
+include(":items:TransactionCard")
+include(":core:Model")

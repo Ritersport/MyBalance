@@ -1,4 +1,4 @@
-package com.ritesrport.mybalance.domain.entity
+package com.ritesrport.model
 
 data class Category(
     val id: Long,

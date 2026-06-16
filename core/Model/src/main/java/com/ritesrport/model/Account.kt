@@ -1,4 +1,4 @@
-package com.ritesrport.mybalance.domain.entity
+package com.ritesrport.model
 
 import java.math.BigDecimal
 
