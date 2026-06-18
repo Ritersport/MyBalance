@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.ritesrport.items.transactioncard"
+    namespace = "com.ritesrport.transactionlist"
     compileSdk {
         version = release(36)
     }
@@ -28,11 +28,12 @@ android {
 
 dependencies {
     implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.compose.runtime)
-    implementation(libs.androidx.compose.ui.tooling)
+    implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.material3)
+    implementation(libs.material)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
+
+    api(":items:TransactionCard")
 }
