@@ -31,9 +31,10 @@ dependencies {
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.core.ktx)
     implementation(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(libs.androidx.junit)
+    implementation(libs.ui.tooling.preview)
+    implementation(libs.dagger.hilt)
+    implementation(libs.androidx.hilt.navigation.compose)
+    ksp(libs.hilt.android.compiler)
 
     api(":items:TransactionCard")
 }

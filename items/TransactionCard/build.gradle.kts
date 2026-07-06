@@ -32,7 +32,4 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.material3)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(libs.androidx.junit)
 }
