@@ -2,13 +2,11 @@ package com.ritesrport.core.database.data.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.math.BigDecimal
 
 @Entity
-data class AccountEntity(
+data class IncomeSourceEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long,
     val name: String,
-    val balance: BigDecimal?,
     val icon: String
 )
