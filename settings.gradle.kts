@@ -23,6 +23,7 @@ rootProject.name = "MyBalance"
 include(":app")
 include(":core:DataBase")
 include(":core:DesignSystem")
+include(":core:Data")
 include(":features:AddTransaction")
 include(":items:TransactionCard")
 include(":core:Model")

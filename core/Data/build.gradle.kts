@@ -1,39 +1,47 @@
 plugins {
-    alias(libs.plugins.android.library)
+    alias(libs.plugins.android.application)
     alias(libs.plugins.android.built.in1.kotlin)
     alias(libs.plugins.kotlin.ksp)
     alias(libs.plugins.android.hilt)
 }
 
 android {
-    namespace = "com.ritesrport.core.database"
+    namespace = "com.ritesrport.data"
     compileSdk {
         version = release(36)
     }
 
     defaultConfig {
+        applicationId = "com.ritesrport.data"
         minSdk = 24
+        targetSdk = 36
+        versionCode = 1
+        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            optimization {
+                enable = false
+            }
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-
 }
 
 dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)
     implementation(libs.material)
-
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.ktx)
     implementation(libs.dagger.hilt)
 
-    ksp(libs.androidx.room.compiler)
     ksp(libs.hilt.android.compiler)
 
     implementation(project(":core:Model"))
+    implementation(project(":core:DataBase"))
 }
