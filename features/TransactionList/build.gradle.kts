@@ -40,6 +40,6 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     ksp(libs.hilt.android.compiler)
 
-    implementation(project(":core:DataBase"))
+    implementation(project(":core:Data"))
     implementation(project(":items:TransactionCard"))
 }

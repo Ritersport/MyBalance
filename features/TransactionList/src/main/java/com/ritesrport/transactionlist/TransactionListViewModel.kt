@@ -2,6 +2,7 @@ package com.ritesrport.transactionlist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ritesrport.core.data.TransactionsRepository
 import com.ritesrport.items.transactioncard.TransactionInterface
 import com.ritesrport.items.transactioncard.TransactionModel
 import com.ritesrport.items.transactioncard.transactionModelPreview
@@ -14,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TransactionListViewModel @Inject constructor(
-   // private val transactionsRepository: TransactionsRepository
+    private val transactionsRepository: TransactionsRepository
 ) : ViewModel(), TransactionInterface {
 
     val state: StateFlow<TransactionListUiState>
