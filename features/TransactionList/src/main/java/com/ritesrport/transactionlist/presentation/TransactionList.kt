@@ -1,4 +1,4 @@
-package com.ritesrport.transactionlist
+package com.ritesrport.transactionlist.presentation
 
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed

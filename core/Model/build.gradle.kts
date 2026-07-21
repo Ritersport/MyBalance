@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.ritesrport.model"
+    namespace = "com.ritesrport.core.model"
     compileSdk {
         version = release(36)
     }

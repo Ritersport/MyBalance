@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
-import com.ritesrport.transactionlist.TransactionListScreen
+import com.ritesrport.transactionlist.presentation.TransactionListScreen
 
 
 @Composable

@@ -1,11 +1,11 @@
-package com.ritesrport.core.database.data.entity.mappers
+package com.ritesrport.transactionlist.data.mappers
 
 import com.ritesrport.core.database.data.entity.AccountEntity
 import com.ritesrport.core.database.data.entity.ExpenseCategoryEntity
 import com.ritesrport.core.database.data.entity.IncomeSourceEntity
 import com.ritesrport.core.database.data.entity.TransactionType
 import com.ritesrport.core.database.data.entity.TransactionWithRelations
-import com.ritesrport.model.Transaction
+import com.ritesrport.transactionlist.domain.Transaction
 
 fun TransactionWithRelations.toDomain(): Transaction? {
     return when (transaction.type) {
@@ -17,7 +17,7 @@ fun TransactionWithRelations.toDomain(): Transaction? {
 
 private fun TransactionWithRelations.toIncomeDomain(
     incomeSourceEntity: IncomeSourceEntity?, accountEntity: AccountEntity?
-): Transaction.Income? {
+): Transaction? {
     val category = incomeSourceEntity?.toDomain() ?: return null
     val account = accountEntity?.toDomain() ?: return null
     return Transaction.Income(
@@ -33,7 +33,7 @@ private fun TransactionWithRelations.toIncomeDomain(
 private fun TransactionWithRelations.toExpenseDomain(
     categoryEntity: ExpenseCategoryEntity?,
     accountEntity: AccountEntity?
-): Transaction.Expense? {
+): Transaction? {
     val category = categoryEntity?.toDomain() ?: return null
     val account = accountEntity?.toDomain() ?: return null
     return Transaction.Expense(
@@ -49,7 +49,7 @@ private fun TransactionWithRelations.toExpenseDomain(
 private fun TransactionWithRelations.toTransferDomain(
     sourceAccountEntity: AccountEntity?,
     destinationAccountEntity: AccountEntity?
-): Transaction.Transfer? {
+): Transaction? {
     val sourceAccount = sourceAccountEntity?.toDomain() ?: return null
     val destinationAccount = destinationAccountEntity?.toDomain() ?: return null
     return Transaction.Transfer(

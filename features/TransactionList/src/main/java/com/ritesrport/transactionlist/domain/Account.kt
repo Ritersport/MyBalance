@@ -1,5 +1,6 @@
-package com.ritesrport.model
+package com.ritesrport.transactionlist.domain
 
+import com.ritesrport.core.model.IconKey
 import java.math.BigDecimal
 
 data class Account(

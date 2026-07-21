@@ -1,13 +1,13 @@
-package com.ritesrport.transactionlist
+package com.ritesrport.transactionlist.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ritesrport.core.data.TransactionsRepository
 import com.ritesrport.items.transactioncard.TransactionInterface
 import com.ritesrport.items.transactioncard.TransactionModel
-import com.ritesrport.items.transactioncard.transactionModelPreview
+import com.ritesrport.transactionlist.domain.TransactionsRepository
+import com.ritesrport.transactionlist.presentation.mappers.toPresentation
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -25,9 +25,11 @@ class TransactionListViewModel @Inject constructor(
         MutableStateFlow(TransactionListUiState.Loading)
 
     init {
-        viewModelScope.launch {
-            delay(3000)
-            _state.value = TransactionListUiState.Success(listOf(transactionModelPreview))
+        viewModelScope.launch(Dispatchers.IO) {
+            transactionsRepository.transactions.collect { transactions ->
+                _state.value =
+                    TransactionListUiState.Success(transactions.map { it.toPresentation() })
+            }
         }
     }
 

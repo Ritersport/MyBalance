@@ -34,6 +34,4 @@ dependencies {
 
     ksp(libs.androidx.room.compiler)
     ksp(libs.hilt.android.compiler)
-
-    implementation(project(":core:Model"))
 }

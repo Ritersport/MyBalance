@@ -25,4 +25,6 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)
     implementation(libs.material)
+
+    implementation(project(":core:Model"))
 }

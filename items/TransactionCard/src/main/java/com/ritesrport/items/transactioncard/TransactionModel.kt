@@ -1,9 +1,7 @@
 package com.ritesrport.items.transactioncard
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.annotation.DrawableRes
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 
 data class TransactionModel(
     val id: Long,
@@ -12,7 +10,7 @@ data class TransactionModel(
     val amount: String,
     val type: TransactionType,
     val additionalInfo: String,
-    val icon: ImageVector,
+    @param:DrawableRes val iconResId: Int,
     val iconColor: Color
 )
 
@@ -29,6 +27,6 @@ val transactionModelPreview = TransactionModel(
     "-Р 45,00",
     TransactionType.EXPENSE,
     "Карта Тинькофф",
-    Icons.Default.ShoppingCart,
+    R.drawable.category_shopping_cart,
     Color(12, 24, 136, 255)
 )

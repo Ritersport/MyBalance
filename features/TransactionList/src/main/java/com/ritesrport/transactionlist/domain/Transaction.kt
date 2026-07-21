@@ -1,4 +1,4 @@
-package com.ritesrport.model
+package com.ritesrport.transactionlist.domain
 
 import java.math.BigDecimal
 import java.time.LocalDate
