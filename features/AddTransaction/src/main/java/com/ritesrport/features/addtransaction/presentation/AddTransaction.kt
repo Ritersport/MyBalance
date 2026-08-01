@@ -29,6 +29,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ritesrport.features.addtransaction.domain.TransactionType.EXPENSE
 import com.ritesrport.features.addtransaction.presentation.composables.AddTransactionToolbar
 import com.ritesrport.features.addtransaction.presentation.composables.NumberKeyboard
@@ -37,8 +39,15 @@ import com.ritesrport.features.addtransaction.presentation.composables.TagChip
 import com.ritesrport.features.addtransaction.presentation.composables.TransactionTypeSelector
 
 @Composable
-fun AddTransactionScreen() {
-
+fun AddTransactionScreen(viewModel: AddTransactionViewModel = hiltViewModel()) {
+    val state by viewModel.state.collectAsStateWithLifecycle()
+    when (state) {
+        is AddTransactionUiState.Error -> TODO()
+        AddTransactionUiState.Loading -> Text("Loading...")
+        is AddTransactionUiState.Success -> AddTransactionLayout(
+            (state as AddTransactionUiState.Success).state,
+        )
+    }
 }
 
 @Composable
@@ -54,10 +63,7 @@ fun AddTransactionLayout(state: AddTransactionState, modifier: Modifier = Modifi
             .verticalScroll(rememberScrollState())
     ) {
 
-        AddTransactionToolbar(
-            onBackClick = {},
-            onSaveClick = {}
-        )
+        AddTransactionToolbar(onBackClick = {}, onSaveClick = {})
 
         Column(
             modifier = modifier
@@ -68,13 +74,11 @@ fun AddTransactionLayout(state: AddTransactionState, modifier: Modifier = Modifi
             Spacer(Modifier.height(12.dp))
 
             TransactionTypeSelector(
-                selected = selectedType,
-                onSelected = {
+                selected = selectedType, onSelected = {
                     selectedType = it
-                }
-            )
+                })
 
-            Spacer(Modifier.height(28.dp))
+            Spacer(Modifier.height(14.dp))
 
             Text(
                 text = state.amount,
@@ -82,11 +86,10 @@ fun AddTransactionLayout(state: AddTransactionState, modifier: Modifier = Modifi
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             )
 
-            Spacer(Modifier.height(28.dp))
+            Spacer(Modifier.height(8.dp))
 
             Card(
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(16.dp)
+                modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(16.dp)
             ) {
 
                 Column {
@@ -118,8 +121,7 @@ fun AddTransactionLayout(state: AddTransactionState, modifier: Modifier = Modifi
             Spacer(Modifier.height(16.dp))
 
             Text(
-                text = "Теги",
-                style = MaterialTheme.typography.labelMedium
+                text = "Теги", style = MaterialTheme.typography.labelMedium
             )
 
             Spacer(Modifier.height(8.dp))
@@ -131,12 +133,9 @@ fun AddTransactionLayout(state: AddTransactionState, modifier: Modifier = Modifi
                     TagChip(it)
                 }
 
-                AssistChip(
-                    onClick = {},
-                    label = {
-                        Text("+ Тег")
-                    }
-                )
+                AssistChip(onClick = {}, label = {
+                    Text("+ Тег")
+                })
             }
             NumberKeyboard()
         }
@@ -147,7 +146,6 @@ fun AddTransactionLayout(state: AddTransactionState, modifier: Modifier = Modifi
 @Composable
 fun AddTransactionLayoutPreview(modifier: Modifier = Modifier) {
     AddTransactionLayout(
-        state = addTransactionStatePreview,
-        modifier = modifier
+        state = addTransactionStatePreview, modifier = modifier
     )
 }
