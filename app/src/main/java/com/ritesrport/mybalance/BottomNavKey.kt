@@ -1,6 +1,7 @@
 package com.ritesrport.mybalance
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.outlined.Receipt
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -18,8 +19,17 @@ sealed interface BottomNavKey : NavKey {
         override val icon: ImageVector = Icons.Outlined.Receipt
     }
 
+    @Serializable
+    data object AddTransaction : BottomNavKey {
+        override val label: String
+            get() = "Add transaction"
+        override val icon: ImageVector
+            get() = Icons.Default.Add
+    }
+
+
     companion object {
-        val items = listOf(TransactionsList)
+        val items = listOf(TransactionsList, AddTransaction)
 
         val stateSaver = Saver<BottomNavKey, String>(
             save = { it::class.qualifiedName },

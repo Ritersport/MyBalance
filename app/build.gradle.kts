@@ -68,5 +68,6 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
 
     implementation(project(":features:TransactionList"))
+    implementation(project(":features:AddTransaction"))
 
 }

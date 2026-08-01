@@ -16,18 +16,21 @@ import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
+import com.ritesrport.features.addtransaction.presentation.AddTransactionScreen
 import com.ritesrport.transactionlist.presentation.TransactionListScreen
 
 
 @Composable
 fun MainScreen() {
     val transactionsBackStack = rememberNavBackStack(BottomNavKey.TransactionsList)
+    val addTransactionBackStack = rememberNavBackStack(BottomNavKey.AddTransaction)
 
     var currentKey by rememberSaveable(stateSaver = BottomNavKey.stateSaver) {
         mutableStateOf(BottomNavKey.TransactionsList)
     }
     val currentBackStack = when (currentKey) {
         BottomNavKey.TransactionsList -> transactionsBackStack
+        BottomNavKey.AddTransaction -> addTransactionBackStack
     }
 
 
@@ -54,6 +57,9 @@ fun MainScreen() {
             entryProvider = entryProvider {
                 entry<BottomNavKey.TransactionsList> {
                     TransactionListScreen()
+                }
+                entry<BottomNavKey.AddTransaction> {
+                    AddTransactionScreen()
                 }
             }
         )
