@@ -1,52 +1,53 @@
 package com.ritesrport.core.designsystem.icons
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.PathFillType
+import androidx.compose.ui.graphics.PathFillType.Companion.NonZero
 import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.StrokeJoin
+import androidx.compose.ui.graphics.StrokeCap.Companion.Butt
+import androidx.compose.ui.graphics.StrokeJoin.Companion.Miter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.vector.ImageVector.Builder
 import androidx.compose.ui.graphics.vector.path
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.ritesrport.core.designsystem.MyBalanceIcons
+import kotlin.Unit
 
-@Suppress("CheckReturnValue")
-val check: ImageVector
+val MyBalanceIcons.Check: ImageVector
     get() {
         if (_check != null) {
             return _check!!
         }
-        _check =
-            ImageVector.Builder(
-                name = "check",
-                defaultWidth = 24.dp,
-                defaultHeight = 24.dp,
-                viewportWidth = 24f,
-                viewportHeight = 24f,
-            )
-                .apply {
-                    path(
-                        fill = SolidColor(Color.Black),
-                        fillAlpha = 1f,
-                        stroke = null,
-                        strokeAlpha = 1f,
-                        strokeLineWidth = 1f,
-                        strokeLineCap = StrokeCap.Butt,
-                        strokeLineJoin = StrokeJoin.Bevel,
-                        strokeLineMiter = 1f,
-                        pathFillType = PathFillType.NonZero,
-                    ) {
-                        moveTo(9.55f, 18f)
-                        lineTo(3.85f, 12.3f)
-                        lineTo(5.28f, 10.88f)
-                        lineToRelative(4.28f, 4.28f)
-                        lineTo(18.73f, 5.97f)
-                        lineTo(20.15f, 7.4f)
-                        lineTo(9.55f, 18f)
-                        close()
-                    }
-                }
-                .build()
+        _check = Builder(name = "Check", defaultWidth = 24.0.dp, defaultHeight = 24.0.dp,
+                viewportWidth = 960.0f, viewportHeight = 960.0f).apply {
+            path(fill = SolidColor(Color(0xFF1f1f1f)), stroke = null, strokeLineWidth = 0.0f,
+                    strokeLineCap = Butt, strokeLineJoin = Miter, strokeLineMiter = 4.0f,
+                    pathFillType = NonZero) {
+                moveTo(382.0f, 720.0f)
+                lineTo(154.0f, 492.0f)
+                lineToRelative(57.0f, -57.0f)
+                lineToRelative(171.0f, 171.0f)
+                lineToRelative(367.0f, -367.0f)
+                lineToRelative(57.0f, 57.0f)
+                lineToRelative(-424.0f, 424.0f)
+                close()
+            }
+        }
+        .build()
         return _check!!
     }
 
 private var _check: ImageVector? = null
+
+@Preview
+@Composable
+private fun Preview(): Unit {
+    Box(modifier = Modifier.padding(12.dp)) {
+        Image(imageVector = MyBalanceIcons.Check, contentDescription = "")
+    }
+}

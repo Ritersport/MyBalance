@@ -1,58 +1,59 @@
 package com.ritesrport.core.designsystem.icons
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.PathFillType
+import androidx.compose.ui.graphics.PathFillType.Companion.NonZero
 import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.StrokeJoin
+import androidx.compose.ui.graphics.StrokeCap.Companion.Butt
+import androidx.compose.ui.graphics.StrokeJoin.Companion.Miter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.vector.ImageVector.Builder
 import androidx.compose.ui.graphics.vector.path
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.ritesrport.core.designsystem.MyBalanceIcons
+import kotlin.Unit
 
-@Suppress("CheckReturnValue")
-val close: ImageVector
+public val MyBalanceIcons.Close: ImageVector
     get() {
         if (_close != null) {
             return _close!!
         }
-        _close =
-            ImageVector.Builder(
-                name = "close",
-                defaultWidth = 24.dp,
-                defaultHeight = 24.dp,
-                viewportWidth = 24f,
-                viewportHeight = 24f,
-            )
-                .apply {
-                    path(
-                        fill = SolidColor(Color.Black),
-                        fillAlpha = 1f,
-                        stroke = null,
-                        strokeAlpha = 1f,
-                        strokeLineWidth = 1f,
-                        strokeLineCap = StrokeCap.Butt,
-                        strokeLineJoin = StrokeJoin.Bevel,
-                        strokeLineMiter = 1f,
-                        pathFillType = PathFillType.NonZero,
-                    ) {
-                        moveTo(6.4f, 19f)
-                        lineTo(5f, 17.6f)
-                        lineTo(10.6f, 12f)
-                        lineTo(5f, 6.4f)
-                        lineTo(6.4f, 5f)
-                        lineTo(12f, 10.6f)
-                        lineTo(17.6f, 5f)
-                        lineTo(19f, 6.4f)
-                        lineTo(13.4f, 12f)
-                        lineTo(19f, 17.6f)
-                        lineTo(17.6f, 19f)
-                        lineTo(12f, 13.4f)
-                        lineTo(6.4f, 19f)
-                        close()
-                    }
-                }
-                .build()
+        _close = Builder(name = "Close", defaultWidth = 24.0.dp, defaultHeight = 24.0.dp,
+                viewportWidth = 960.0f, viewportHeight = 960.0f).apply {
+            path(fill = SolidColor(Color(0xFF1f1f1f)), stroke = null, strokeLineWidth = 0.0f,
+                    strokeLineCap = Butt, strokeLineJoin = Miter, strokeLineMiter = 4.0f,
+                    pathFillType = NonZero) {
+                moveToRelative(256.0f, 760.0f)
+                lineToRelative(-56.0f, -56.0f)
+                lineToRelative(224.0f, -224.0f)
+                lineToRelative(-224.0f, -224.0f)
+                lineToRelative(56.0f, -56.0f)
+                lineToRelative(224.0f, 224.0f)
+                lineToRelative(224.0f, -224.0f)
+                lineToRelative(56.0f, 56.0f)
+                lineToRelative(-224.0f, 224.0f)
+                lineToRelative(224.0f, 224.0f)
+                lineToRelative(-56.0f, 56.0f)
+                lineToRelative(-224.0f, -224.0f)
+                lineToRelative(-224.0f, 224.0f)
+                close()
+            }
+        }
+        .build()
         return _close!!
     }
 
 private var _close: ImageVector? = null
+
+@Preview
+@Composable
+private fun Preview(): Unit {
+    Box(modifier = Modifier.padding(12.dp)) {
+        Image(imageVector = MyBalanceIcons.Close, contentDescription = "")
+    }
+}

@@ -1,52 +1,53 @@
 package com.ritesrport.core.designsystem.icons
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.PathFillType
+import androidx.compose.ui.graphics.PathFillType.Companion.NonZero
 import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.StrokeJoin
+import androidx.compose.ui.graphics.StrokeCap.Companion.Butt
+import androidx.compose.ui.graphics.StrokeJoin.Companion.Miter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.vector.ImageVector.Builder
 import androidx.compose.ui.graphics.vector.path
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.ritesrport.core.designsystem.MyBalanceIcons
+import kotlin.Unit
 
-@Suppress("CheckReturnValue")
-val chevron_right: ImageVector
+public val MyBalanceIcons.ChevronRight: ImageVector
     get() {
-        if (_chevron_right != null) {
-            return _chevron_right!!
+        if (_chevronRight != null) {
+            return _chevronRight!!
         }
-        _chevron_right =
-            ImageVector.Builder(
-                name = "chevron_right",
-                defaultWidth = 24.dp,
-                defaultHeight = 24.dp,
-                viewportWidth = 24f,
-                viewportHeight = 24f,
-            )
-                .apply {
-                    path(
-                        fill = SolidColor(Color.Black),
-                        fillAlpha = 1f,
-                        stroke = null,
-                        strokeAlpha = 1f,
-                        strokeLineWidth = 1f,
-                        strokeLineCap = StrokeCap.Butt,
-                        strokeLineJoin = StrokeJoin.Bevel,
-                        strokeLineMiter = 1f,
-                        pathFillType = PathFillType.NonZero,
-                    ) {
-                        moveTo(12.6f, 12f)
-                        lineTo(8f, 7.4f)
-                        lineTo(9.4f, 6f)
-                        lineToRelative(6f, 6f)
-                        lineToRelative(-6f, 6f)
-                        lineTo(8f, 16.6f)
-                        lineTo(12.6f, 12f)
-                        close()
-                    }
-                }
-                .build()
-        return _chevron_right!!
+        _chevronRight = Builder(name = "ChevronRight", defaultWidth = 24.0.dp, defaultHeight =
+                24.0.dp, viewportWidth = 960.0f, viewportHeight = 960.0f).apply {
+            path(fill = SolidColor(Color(0xFF1f1f1f)), stroke = null, strokeLineWidth = 0.0f,
+                    strokeLineCap = Butt, strokeLineJoin = Miter, strokeLineMiter = 4.0f,
+                    pathFillType = NonZero) {
+                moveTo(504.0f, 480.0f)
+                lineTo(320.0f, 296.0f)
+                lineToRelative(56.0f, -56.0f)
+                lineToRelative(240.0f, 240.0f)
+                lineToRelative(-240.0f, 240.0f)
+                lineToRelative(-56.0f, -56.0f)
+                lineToRelative(184.0f, -184.0f)
+                close()
+            }
+        }
+        .build()
+        return _chevronRight!!
     }
 
-private var _chevron_right: ImageVector? = null
+private var _chevronRight: ImageVector? = null
+
+@Preview
+@Composable
+private fun Preview(): Unit {
+    Box(modifier = Modifier.padding(12.dp)) {
+        Image(imageVector = MyBalanceIcons.ChevronRight, contentDescription = "")
+    }
+}

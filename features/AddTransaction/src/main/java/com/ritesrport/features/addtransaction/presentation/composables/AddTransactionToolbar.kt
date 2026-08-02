@@ -13,8 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.ritesrport.core.designsystem.icons.check
-import com.ritesrport.core.designsystem.icons.close
+import com.ritesrport.core.designsystem.MyBalanceIcons
+import com.ritesrport.core.designsystem.icons.Check
+import com.ritesrport.core.designsystem.icons.Close
 
 @Composable
 fun AddTransactionToolbar(
@@ -32,7 +33,7 @@ fun AddTransactionToolbar(
             modifier = Modifier.align(Alignment.CenterStart)
         ) {
             Icon(
-                close,
+                MyBalanceIcons.Close,
                 contentDescription = "Закрыть",
                 tint = Color(0xFF6A5AE0)
             )
@@ -49,7 +50,7 @@ fun AddTransactionToolbar(
             modifier = Modifier.align(Alignment.CenterEnd)
         ) {
             Icon(
-                check,
+                MyBalanceIcons.Check,
                 contentDescription = "Сохранить",
                 tint = Color(0xFF6A5AE0)
             )

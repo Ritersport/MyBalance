@@ -1,112 +1,113 @@
 package com.ritesrport.core.designsystem.icons
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.PathFillType
+import androidx.compose.ui.graphics.PathFillType.Companion.NonZero
 import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.StrokeJoin
+import androidx.compose.ui.graphics.StrokeCap.Companion.Butt
+import androidx.compose.ui.graphics.StrokeJoin.Companion.Miter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.vector.ImageVector.Builder
 import androidx.compose.ui.graphics.vector.path
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.ritesrport.core.designsystem.MyBalanceIcons
+import kotlin.Unit
 
-@Suppress("CheckReturnValue")
-val date_range: ImageVector
+public val MyBalanceIcons.DateRange: ImageVector
     get() {
-        if (_date_range != null) {
-            return _date_range!!
+        if (_dateRange != null) {
+            return _dateRange!!
         }
-        _date_range =
-            ImageVector.Builder(
-                name = "date_range",
-                defaultWidth = 24.dp,
-                defaultHeight = 24.dp,
-                viewportWidth = 24f,
-                viewportHeight = 24f,
-            )
-                .apply {
-                    path(
-                        fill = SolidColor(Color.Black),
-                        fillAlpha = 1f,
-                        stroke = null,
-                        strokeAlpha = 1f,
-                        strokeLineWidth = 1f,
-                        strokeLineCap = StrokeCap.Butt,
-                        strokeLineJoin = StrokeJoin.Bevel,
-                        strokeLineMiter = 1f,
-                        pathFillType = PathFillType.NonZero,
-                    ) {
-                        moveTo(7.29f, 13.71f)
-                        quadTo(7f, 13.43f, 7f, 13f)
-                        reflectiveQuadTo(7.29f, 12.29f)
-                        reflectiveQuadTo(8f, 12f)
-                        reflectiveQuadToRelative(0.71f, 0.29f)
-                        reflectiveQuadTo(9f, 13f)
-                        reflectiveQuadTo(8.71f, 13.71f)
-                        reflectiveQuadTo(8f, 14f)
-                        quadTo(7.58f, 14f, 7.29f, 13.71f)
-                        close()
-                        moveToRelative(4f, 0f)
-                        quadTo(11f, 13.43f, 11f, 13f)
-                        reflectiveQuadToRelative(0.29f, -0.71f)
-                        reflectiveQuadTo(12f, 12f)
-                        reflectiveQuadToRelative(0.71f, 0.29f)
-                        reflectiveQuadTo(13f, 13f)
-                        reflectiveQuadToRelative(-0.29f, 0.71f)
-                        reflectiveQuadTo(12f, 14f)
-                        reflectiveQuadTo(11.29f, 13.71f)
-                        close()
-                        moveToRelative(4f, 0f)
-                        quadTo(15f, 13.43f, 15f, 13f)
-                        reflectiveQuadToRelative(0.29f, -0.71f)
-                        reflectiveQuadTo(16f, 12f)
-                        quadToRelative(0.43f, 0f, 0.71f, 0.29f)
-                        reflectiveQuadTo(17f, 13f)
-                        reflectiveQuadToRelative(-0.29f, 0.71f)
-                        reflectiveQuadTo(16f, 14f)
-                        reflectiveQuadTo(15.29f, 13.71f)
-                        close()
-                        moveTo(5f, 22f)
-                        quadTo(4.18f, 22f, 3.59f, 21.41f)
-                        reflectiveQuadTo(3f, 20f)
-                        verticalLineTo(6f)
-                        quadTo(3f, 5.18f, 3.59f, 4.59f)
-                        reflectiveQuadTo(5f, 4f)
-                        horizontalLineTo(6f)
-                        verticalLineTo(2f)
-                        horizontalLineTo(8f)
-                        verticalLineTo(4f)
-                        horizontalLineToRelative(8f)
-                        verticalLineTo(2f)
-                        horizontalLineToRelative(2f)
-                        verticalLineTo(4f)
-                        horizontalLineToRelative(1f)
-                        quadToRelative(0.83f, 0f, 1.41f, 0.59f)
-                        quadTo(21f, 5.18f, 21f, 6f)
-                        verticalLineTo(20f)
-                        quadToRelative(0f, 0.82f, -0.59f, 1.41f)
-                        reflectiveQuadTo(19f, 22f)
-                        horizontalLineTo(5f)
-                        close()
-                        moveTo(5f, 20f)
-                        horizontalLineTo(19f)
-                        verticalLineTo(10f)
-                        horizontalLineTo(5f)
-                        verticalLineTo(20f)
-                        close()
-                        moveTo(5f, 8f)
-                        horizontalLineTo(19f)
-                        verticalLineTo(6f)
-                        horizontalLineTo(5f)
-                        verticalLineTo(8f)
-                        close()
-                        moveTo(5f, 8f)
-                        verticalLineTo(6f)
-                        verticalLineTo(8f)
-                        close()
-                    }
-                }
-                .build()
-        return _date_range!!
+        _dateRange = Builder(name = "DateRange", defaultWidth = 24.0.dp, defaultHeight = 24.0.dp,
+                viewportWidth = 960.0f, viewportHeight = 960.0f).apply {
+            path(fill = SolidColor(Color(0xFF1f1f1f)), stroke = null, strokeLineWidth = 0.0f,
+                    strokeLineCap = Butt, strokeLineJoin = Miter, strokeLineMiter = 4.0f,
+                    pathFillType = NonZero) {
+                moveTo(291.5f, 548.5f)
+                quadTo(280.0f, 537.0f, 280.0f, 520.0f)
+                reflectiveQuadToRelative(11.5f, -28.5f)
+                quadTo(303.0f, 480.0f, 320.0f, 480.0f)
+                reflectiveQuadToRelative(28.5f, 11.5f)
+                quadTo(360.0f, 503.0f, 360.0f, 520.0f)
+                reflectiveQuadToRelative(-11.5f, 28.5f)
+                quadTo(337.0f, 560.0f, 320.0f, 560.0f)
+                reflectiveQuadToRelative(-28.5f, -11.5f)
+                close()
+                moveTo(451.5f, 548.5f)
+                quadTo(440.0f, 537.0f, 440.0f, 520.0f)
+                reflectiveQuadToRelative(11.5f, -28.5f)
+                quadTo(463.0f, 480.0f, 480.0f, 480.0f)
+                reflectiveQuadToRelative(28.5f, 11.5f)
+                quadTo(520.0f, 503.0f, 520.0f, 520.0f)
+                reflectiveQuadToRelative(-11.5f, 28.5f)
+                quadTo(497.0f, 560.0f, 480.0f, 560.0f)
+                reflectiveQuadToRelative(-28.5f, -11.5f)
+                close()
+                moveTo(611.5f, 548.5f)
+                quadTo(600.0f, 537.0f, 600.0f, 520.0f)
+                reflectiveQuadToRelative(11.5f, -28.5f)
+                quadTo(623.0f, 480.0f, 640.0f, 480.0f)
+                reflectiveQuadToRelative(28.5f, 11.5f)
+                quadTo(680.0f, 503.0f, 680.0f, 520.0f)
+                reflectiveQuadToRelative(-11.5f, 28.5f)
+                quadTo(657.0f, 560.0f, 640.0f, 560.0f)
+                reflectiveQuadToRelative(-28.5f, -11.5f)
+                close()
+                moveTo(200.0f, 880.0f)
+                quadToRelative(-33.0f, 0.0f, -56.5f, -23.5f)
+                reflectiveQuadTo(120.0f, 800.0f)
+                verticalLineToRelative(-560.0f)
+                quadToRelative(0.0f, -33.0f, 23.5f, -56.5f)
+                reflectiveQuadTo(200.0f, 160.0f)
+                horizontalLineToRelative(40.0f)
+                verticalLineToRelative(-80.0f)
+                horizontalLineToRelative(80.0f)
+                verticalLineToRelative(80.0f)
+                horizontalLineToRelative(320.0f)
+                verticalLineToRelative(-80.0f)
+                horizontalLineToRelative(80.0f)
+                verticalLineToRelative(80.0f)
+                horizontalLineToRelative(40.0f)
+                quadToRelative(33.0f, 0.0f, 56.5f, 23.5f)
+                reflectiveQuadTo(840.0f, 240.0f)
+                verticalLineToRelative(560.0f)
+                quadToRelative(0.0f, 33.0f, -23.5f, 56.5f)
+                reflectiveQuadTo(760.0f, 880.0f)
+                lineTo(200.0f, 880.0f)
+                close()
+                moveTo(200.0f, 800.0f)
+                horizontalLineToRelative(560.0f)
+                verticalLineToRelative(-400.0f)
+                lineTo(200.0f, 400.0f)
+                verticalLineToRelative(400.0f)
+                close()
+                moveTo(200.0f, 320.0f)
+                horizontalLineToRelative(560.0f)
+                verticalLineToRelative(-80.0f)
+                lineTo(200.0f, 240.0f)
+                verticalLineToRelative(80.0f)
+                close()
+                moveTo(200.0f, 320.0f)
+                verticalLineToRelative(-80.0f)
+                verticalLineToRelative(80.0f)
+                close()
+            }
+        }
+        .build()
+        return _dateRange!!
     }
 
-private var _date_range: ImageVector? = null
+private var _dateRange: ImageVector? = null
+
+@Preview
+@Composable
+private fun Preview(): Unit {
+    Box(modifier = Modifier.padding(12.dp)) {
+        Image(imageVector = MyBalanceIcons.DateRange, contentDescription = "")
+    }
+}

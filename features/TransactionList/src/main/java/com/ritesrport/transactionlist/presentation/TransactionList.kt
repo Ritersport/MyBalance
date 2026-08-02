@@ -3,6 +3,7 @@ package com.ritesrport.transactionlist.presentation
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -37,6 +38,7 @@ fun TransactionListLayout(
     transactionCardInterface: TransactionInterface,
     modifier: Modifier = Modifier
 ) {
+    MaterialTheme.shapes.medium
     LazyColumn() {
         itemsIndexed(transactionItems) { index, item ->
             TransactionCard(

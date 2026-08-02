@@ -16,7 +16,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.ritesrport.core.designsystem.icons.chevron_right
+import com.ritesrport.core.designsystem.MyBalanceIcons
+import com.ritesrport.core.designsystem.icons.ChevronRight
 import com.ritesrport.features.addtransaction.presentation.model.SettingsItem
 import com.ritesrport.features.addtransaction.presentation.model.settingsItemPreview
 
@@ -49,7 +50,7 @@ fun SettingsRow(item: SettingsItem) {
         }
 
         Icon(
-            chevron_right, contentDescription = null
+            MyBalanceIcons.ChevronRight, contentDescription = null
         )
     }
 }

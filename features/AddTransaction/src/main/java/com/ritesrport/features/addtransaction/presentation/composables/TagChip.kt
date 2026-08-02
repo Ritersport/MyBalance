@@ -7,7 +7,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.ritesrport.core.designsystem.icons.close
+import com.ritesrport.core.designsystem.MyBalanceIcons
+import com.ritesrport.core.designsystem.icons.Close
 
 @Composable
 fun TagChip(text: String) {
@@ -19,7 +20,7 @@ fun TagChip(text: String) {
         },
         trailingIcon = {
             Icon(
-                imageVector = close,
+                imageVector = MyBalanceIcons.Close,
                 contentDescription = null,
                 modifier = Modifier.size(16.dp)
             )
