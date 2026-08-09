@@ -35,6 +35,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.core.ktx)
     implementation(libs.material)
+    implementation(libs.androidx.compose.material3)
 
     implementation(project(":core:Model"))
     debugImplementation(libs.androidx.compose.ui.tooling)

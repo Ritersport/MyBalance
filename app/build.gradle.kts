@@ -64,10 +64,10 @@ dependencies {
     implementation(libs.androidx.navigation3.ui)
     implementation(libs.androidx.compose.material.icons.extended)
     ksp(libs.hilt.android.compiler)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
     debugImplementation(libs.androidx.ui.tooling)
 
     implementation(project(":features:TransactionList"))
     implementation(project(":features:AddTransaction"))
+    implementation(project(":core:DesignSystem"))
 
 }
