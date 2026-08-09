@@ -1,14 +1,14 @@
 package com.ritesrport.transactionlist.presentation.mappers
 
-import androidx.annotation.DrawableRes
+import androidx.compose.ui.graphics.vector.ImageVector
+import com.ritesrport.core.designsystem.MyBalanceIcons
+import com.ritesrport.core.designsystem.icons.Bus
 import com.ritesrport.core.model.IconKey
-import com.ritesrport.transactionlist.R
 
 object Icons {
 
-    @DrawableRes
-    fun from(key: IconKey): Int =
+    fun from(key: IconKey): ImageVector =
         when (key) {
-            IconKey.Bus -> R.drawable.category_icon_bus
+            IconKey.Bus -> MyBalanceIcons.Bus
         }
 }

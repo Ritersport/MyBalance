@@ -43,5 +43,6 @@ dependencies {
 
     implementation(project(":core:DataBase"))
     implementation(project(":core:Model"))
+    implementation(project(":core:DesignSystem"))
     implementation(project(":items:TransactionCard"))
 }
