@@ -32,4 +32,6 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.material3)
+
+    implementation(project(":core:DesignSystem"))
 }
