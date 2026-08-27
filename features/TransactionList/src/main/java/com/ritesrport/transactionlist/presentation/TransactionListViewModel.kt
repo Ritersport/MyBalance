@@ -4,23 +4,22 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ritesrport.items.transactioncard.TransactionInterface
 import com.ritesrport.items.transactioncard.TransactionModel
-import com.ritesrport.transactionlist.domain.TransactionsRepository
 import com.ritesrport.transactionlist.presentation.mappers.toPresentation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-
 import com.ritesrport.items.transactioncard.TransactionType
 import com.ritesrport.items.transactioncard.transactionModelExpensePreview
 import com.ritesrport.items.transactioncard.transactionModelIncomePreview
+import com.ritesrport.transactionlist.data.mappers.toDomain
+import com.ritesrport.transactionlist.domain.TransactionListInteractor
 import java.time.LocalDate
 
 @HiltViewModel
 class TransactionListViewModel @Inject constructor(
-    private val transactionsRepository: TransactionsRepository
+    private val transactionListInteractor: TransactionListInteractor
 ) : ViewModel(), TransactionInterface {
 
     private val _state: MutableStateFlow<TransactionListUiState> =
@@ -32,8 +31,8 @@ class TransactionListViewModel @Inject constructor(
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            transactionsRepository.transactions.collect { transactions ->
-                allTransactions = transactions.map { it.toPresentation() }
+            transactionListInteractor.transactionFlow.collect { transactions ->
+                allTransactions = transactions.map { it.toDomain()?.toPresentation() }.filterNotNull()
                 updateState()
             }
         }
@@ -61,8 +60,11 @@ class TransactionListViewModel @Inject constructor(
         val groups = filtered.groupBy { it.date }
             .map { (date, items) -> TransactionGroup(date, items) }
             .sortedByDescending { it.date }
-
-        _state.value = TransactionListUiState.Success(groups, currentFilter)
+        if (groups.isEmpty()) {
+            _state.value = TransactionListUiState.Empty
+        } else {
+            _state.value = TransactionListUiState.Success(groups, currentFilter)
+        }
     }
 
     override fun onTransactionCardClick(transactionId: Long) {
