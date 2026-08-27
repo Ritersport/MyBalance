@@ -22,7 +22,8 @@ private fun Transaction.Income.toPresentation(): TransactionModel {
         TransactionType.INCOME,
         account.name,
         Icons.from(source.icon),
-        Color(12, 24, 136, 255)
+        Color(12, 24, 136, 255),
+        date
     )
 }
 
@@ -35,7 +36,8 @@ private fun Transaction.Expense.toPresentation(): TransactionModel {
         TransactionType.EXPENSE,
         account.name,
         Icons.from(category.icon),
-        Color(12, 24, 136, 255)
+        Color(12, 24, 136, 255),
+        date
     )
 }
 
@@ -48,6 +50,7 @@ private fun Transaction.Transfer.toPresentation(): TransactionModel {
         TransactionType.EXPENSE,
         destinationAccount.name,
         Icons.from(sourceAccount.icon),
-        Color(12, 24, 136, 255)
+        Color(12, 24, 136, 255),
+        date
     )
 }
