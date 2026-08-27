@@ -6,6 +6,8 @@ import com.ritesrport.core.designsystem.MyBalanceIcons
 import com.ritesrport.core.designsystem.icons.Check
 import com.ritesrport.core.designsystem.icons.ShoppingCart
 
+import java.time.LocalDate
+
 data class TransactionModel(
     val id: Long,
     val title: String,
@@ -14,7 +16,8 @@ data class TransactionModel(
     val type: TransactionType,
     val additionalInfo: String,
     val icon: ImageVector,
-    val iconColor: Color
+    val iconColor: Color,
+    val date: LocalDate
 )
 
 enum class TransactionType {
@@ -31,7 +34,8 @@ val transactionModelExpensePreview = TransactionModel(
     TransactionType.EXPENSE,
     "Карта Тинькофф",
     MyBalanceIcons.ShoppingCart,
-    Color(12, 24, 136, 255)
+    Color(12, 24, 136, 255),
+    LocalDate.now()
 )
 
 val transactionModelIncomePreview = TransactionModel(
@@ -42,5 +46,6 @@ val transactionModelIncomePreview = TransactionModel(
     TransactionType.INCOME,
     "Карта Тинькофф",
     MyBalanceIcons.Check,
-    Color(0xFFFFB5D6)
+    Color(0xFFFFB5D6),
+    LocalDate.now()
 )
