@@ -37,4 +37,5 @@ dependencies {
 
     implementation(project(":core:DesignSystem"))
     implementation(project(":core:DataBase"))
+    implementation(project(":core:Model"))
 }
