@@ -3,6 +3,8 @@ package com.ritesrport.core.database.data.db
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.ritesrport.core.database.data.dao.AccountDao
+import com.ritesrport.core.database.data.dao.CategoryDao
 import com.ritesrport.core.database.data.dao.TransactionDao
 import com.ritesrport.core.database.data.entity.AccountEntity
 import com.ritesrport.core.database.data.entity.ExpenseCategoryEntity
@@ -24,4 +26,8 @@ import com.ritesrport.core.database.data.entity.TransactionEntity
 abstract class MyBalanceDatabase : RoomDatabase() {
 
     abstract fun transactionDao(): TransactionDao
+
+    abstract fun accountDao(): AccountDao
+
+    abstract fun categoryDao(): CategoryDao
 }

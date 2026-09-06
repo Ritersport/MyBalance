@@ -12,12 +12,10 @@ data class TransactionEntity(
     val type: TransactionType,
     val amount: BigDecimal,
     val date: LocalDate,
-
-    val sourceAccountId: Long?,
-    val destinationAccountId: Long?,
-    val sourceCategoryId: Long?,
-    val destinationCategoryId: Long?,
-
+    val sourceAccountId: Long? = null,
+    val destinationAccountId: Long? = null,
+    val sourceCategoryId: Long? = null,
+    val destinationCategoryId: Long? = null,
     val comment: String?
 )
 
