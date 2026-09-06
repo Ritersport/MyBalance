@@ -1,11 +1,14 @@
 package com.ritesrport.mybalance
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.layout.padding
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -34,10 +37,29 @@ fun MainScreen() {
     }
 
 
-    Scaffold(
-        bottomBar = {
+    Column(modifier = Modifier.fillMaxSize()) {
+        NavDisplay(
+            modifier = Modifier.weight(1f),
+            backStack = currentBackStack,
+            entryProvider = entryProvider {
+                entry<BottomNavKey.TransactionsList> {
+                    TransactionListScreen()
+                }
+                entry<BottomNavKey.AddTransaction> {
+                    AddTransactionScreen({currentKey = BottomNavKey.TransactionsList})
+                }
+            },
+            transitionSpec = { EnterTransition.None togetherWith ExitTransition.None },
+            popTransitionSpec = { EnterTransition.None togetherWith ExitTransition.None },
+            predictivePopTransitionSpec = { EnterTransition.None togetherWith ExitTransition.None }
+        )
+
+        if (currentKey.showBottomBar)
+        {
             NavigationBar {
                 BottomNavKey.items.forEach { key ->
+                    val label = key.label
+                    val icon = key.icon
                     NavigationBarItem(
                         selected = key == currentKey,
                         onClick = {
@@ -45,24 +67,13 @@ fun MainScreen() {
                                 currentKey = key
                             }
                         },
-                        icon = { Icon(key.icon, contentDescription = key.label) },
-                        label = { Text(key.label) })
+                        icon = { Icon(icon, contentDescription = label) },
+                        label = { Text(label) })
                 }
             }
-        }) { paddingValues ->
+        }
 
-        NavDisplay(
-            modifier = Modifier.padding(paddingValues),
-            backStack = currentBackStack,
-            entryProvider = entryProvider {
-                entry<BottomNavKey.TransactionsList> {
-                    TransactionListScreen()
-                }
-                entry<BottomNavKey.AddTransaction> {
-                    AddTransactionScreen()
-                }
-            }
-        )
+
     }
 
     val canGoBack = currentBackStack.size > 1

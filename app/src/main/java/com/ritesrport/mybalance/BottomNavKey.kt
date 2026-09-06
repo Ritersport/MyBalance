@@ -9,18 +9,18 @@ import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 
 @Serializable
-sealed interface BottomNavKey : NavKey {
-    val label: String
-    val icon: ImageVector
+sealed class BottomNavKey(val showBottomBar: Boolean) : NavKey {
+    abstract val label: String
+    abstract val icon: ImageVector
 
     @Serializable
-    data object TransactionsList : BottomNavKey {
+    data object TransactionsList : BottomNavKey(true) {
         override val label = "Transactions"
         override val icon: ImageVector = Icons.Outlined.Receipt
     }
 
     @Serializable
-    data object AddTransaction : BottomNavKey {
+    data object AddTransaction : BottomNavKey(false) {
         override val label: String
             get() = "Add transaction"
         override val icon: ImageVector
@@ -29,7 +29,7 @@ sealed interface BottomNavKey : NavKey {
 
 
     companion object {
-        val items = listOf(TransactionsList, AddTransaction)
+        val items get() = listOf(TransactionsList, AddTransaction)
 
         val stateSaver = Saver<BottomNavKey, String>(
             save = { it::class.qualifiedName },
