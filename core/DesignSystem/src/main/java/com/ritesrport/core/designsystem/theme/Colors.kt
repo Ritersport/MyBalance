@@ -20,8 +20,8 @@ data class MyBalanceColors(
 
 val LightBalanceColors = MyBalanceColors(
     brand = Color(0xFF7F3DFF),
-    background = Color(0xFFFBFBFB),
-    surface = Color(0xFFFFFFFF),
+    background = Color(0xFFFFFFFF),
+    surface = Color(0xFFFBFBFB),
     onSurface = Color(0xFF0D0E0F),
     textPrimary = Color(0xFF0D0E0F),
     textSecondary = Color(0xFF91919F),

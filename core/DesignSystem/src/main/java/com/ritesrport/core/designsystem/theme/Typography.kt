@@ -17,9 +17,9 @@ data class MyBalanceTypography(
 val BalanceTypography = MyBalanceTypography(
     balance = TextStyle(
         fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Bold,
-        fontSize = 64.sp,
-        lineHeight = 80.sp
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 40.sp,
+        lineHeight = 60.sp
     ),
     header = TextStyle(
         fontFamily = FontFamily.Default,
