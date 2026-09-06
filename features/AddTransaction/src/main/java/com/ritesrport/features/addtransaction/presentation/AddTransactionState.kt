@@ -13,7 +13,18 @@ data class AddTransactionState(
     val destination: SettingsItem,
     val date: SettingsItem,
     val tags: List<String>
-)
+) {
+    companion object {
+        val default = AddTransactionState(
+            transactionType = TransactionType.EXPENSE,
+            amount = "0",
+            source = settingsItemPreview,
+            destination = settingsItemPreview,
+            date = settingsItemPreview,
+            tags = emptyList()
+        )
+    }
+}
 
 val addTransactionStatePreview = AddTransactionState(
     TransactionType.EXPENSE,

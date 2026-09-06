@@ -36,4 +36,6 @@ dependencies {
     ksp(libs.hilt.android.compiler)
 
     implementation(project(":core:DesignSystem"))
+    implementation(project(":core:DataBase"))
+    implementation(project(":shared-repository:transactionRepository"))
 }

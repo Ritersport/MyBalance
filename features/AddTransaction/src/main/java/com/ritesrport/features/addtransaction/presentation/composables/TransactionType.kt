@@ -1,17 +1,18 @@
 package com.ritesrport.features.addtransaction.presentation.composables
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import com.ritesrport.core.designsystem.theme.MyBalanceTheme
 import com.ritesrport.features.addtransaction.domain.TransactionType
 
 @Composable
@@ -20,13 +21,11 @@ fun TransactionTypeSelector(
     onSelected: (TransactionType) -> Unit
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(
-            32.dp,
-            alignment = Alignment.CenterHorizontally
-        ),
-
-        ) {
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(MyBalanceTheme.colors.background),
+        horizontalArrangement = Arrangement.SpaceEvenly
+    ) {
 
         TransactionChip(
             text = "Расход",
@@ -60,9 +59,16 @@ private fun TransactionChip(
     FilterChip(
         selected = selected,
         shape = RoundedCornerShape(50),
+        colors = FilterChipDefaults.filterChipColors()
+            .copy(containerColor = MyBalanceTheme.colors.surface),
         onClick = onClick,
         label = {
-            Text(text, modifier = Modifier.padding(horizontal = 6.dp),)
+            Text(
+                text,
+                color = MyBalanceTheme.colors.textPrimary,
+                style = MyBalanceTheme.typography.description,
+                modifier = Modifier.padding(horizontal = MyBalanceTheme.spacing.small),
+            )
         }
     )
 }
@@ -70,5 +76,15 @@ private fun TransactionChip(
 @Preview
 @Composable
 fun TransactionTypeSelectorPreview() {
-    TransactionTypeSelector(TransactionType.EXPENSE) { }
+    MyBalanceTheme {
+        TransactionTypeSelector(TransactionType.EXPENSE) { }
+    }
+}
+
+@Preview
+@Composable
+fun TransactionTypeSelectorPreviewDark() {
+    MyBalanceTheme(darkTheme = true) {
+        TransactionTypeSelector(TransactionType.EXPENSE) { }
+    }
 }
