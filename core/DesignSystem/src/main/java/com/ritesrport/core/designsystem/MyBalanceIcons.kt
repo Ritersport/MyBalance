@@ -7,9 +7,15 @@ import com.ritesrport.core.designsystem.icons.ChevronRight
 import com.ritesrport.core.designsystem.icons.Close
 import com.ritesrport.core.designsystem.icons.DateRange
 import com.ritesrport.core.designsystem.icons.ShoppingCart
+import com.ritesrport.core.model.IconKey
 import kotlin.collections.List as ____KtList
 
-object MyBalanceIcons
+object MyBalanceIcons {
+  fun from(key: IconKey): ImageVector =
+    when (key) {
+      IconKey.Bus -> MyBalanceIcons.Bus
+    }
+}
 
 private var __AllIcons: ____KtList<ImageVector>? = null
 

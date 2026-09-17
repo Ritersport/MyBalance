@@ -13,7 +13,6 @@ import javax.inject.Inject
 import com.ritesrport.items.transactioncard.TransactionType
 import com.ritesrport.items.transactioncard.transactionModelExpensePreview
 import com.ritesrport.items.transactioncard.transactionModelIncomePreview
-import com.ritesrport.transactionlist.data.mappers.toDomain
 import com.ritesrport.transactionlist.domain.TransactionListInteractor
 import java.time.LocalDate
 
@@ -32,7 +31,7 @@ class TransactionListViewModel @Inject constructor(
     init {
         viewModelScope.launch(Dispatchers.IO) {
             transactionListInteractor.transactionFlow.collect { transactions ->
-                allTransactions = transactions.map { it.toDomain()?.toPresentation() }.filterNotNull()
+                allTransactions = transactions.map { it.toPresentation() }
                 updateState()
             }
         }

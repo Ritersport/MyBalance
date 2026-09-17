@@ -31,11 +31,15 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ritesrport.core.designsystem.theme.MyBalanceTheme
+import com.ritesrport.features.addtransaction.domain.TransactionType
 import com.ritesrport.features.addtransaction.presentation.composables.AddTransactionToolbar
 import com.ritesrport.features.addtransaction.presentation.composables.NumberKeyboard
 import com.ritesrport.features.addtransaction.presentation.composables.SettingsRow
 import com.ritesrport.features.addtransaction.presentation.composables.TagChip
 import com.ritesrport.features.addtransaction.presentation.composables.TransactionTypeSelector
+import com.ritesrport.features.addtransaction.presentation.model.AddTransactionState
+import com.ritesrport.features.addtransaction.presentation.model.addTransactionStatePreview
+import com.ritesrport.features.addtransaction.presentation.model.toSettingsItem
 
 @Composable
 fun AddTransactionScreen(
@@ -53,12 +57,7 @@ fun AddTransactionScreen(
         )
         is AddTransactionUiState.Error -> TODO()
         AddTransactionUiState.Loading -> {
-            AddTransactionLayout(
-                state = AddTransactionState.default,
-                onBack = onBack,
-                onTypeChanged = {},
-                onNumberClick = {}
-            )
+            Text("Loading")
         }
     }
 }
@@ -68,7 +67,7 @@ fun AddTransactionScreen(
 fun AddTransactionLayout(
     state: AddTransactionState,
     onBack: () -> Unit,
-    onTypeChanged: (com.ritesrport.features.addtransaction.domain.TransactionType) -> Unit,
+    onTypeChanged: (TransactionType) -> Unit,
     onNumberClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -90,8 +89,10 @@ fun AddTransactionLayout(
 
             Spacer(Modifier.height(MyBalanceTheme.spacing.medium))
 
+            val transactionType = state.transactionType
+
             TransactionTypeSelector(
-                selected = state.transactionType,
+                selected = transactionType,
                 onSelected = onTypeChanged
             )
 
@@ -111,15 +112,27 @@ fun AddTransactionLayout(
 
                 Column(Modifier.background(MyBalanceTheme.colors.background)) {
 
-                    SettingsRow(state.source)
+                    when (state) {
+                        is AddTransactionState.Expense -> {
+                            SettingsRow(state.destinationCategory.toSettingsItem())
+                            HorizontalDivider()
+                            SettingsRow(state.sourceAccount.toSettingsItem())
+                        }
+                        is AddTransactionState.Income -> {
+                            SettingsRow(state.sourceCategory.toSettingsItem())
+                            HorizontalDivider()
+                            SettingsRow(state.destinationAccount.toSettingsItem())
+                        }
+                        is AddTransactionState.Transfer -> {
+                            SettingsRow(state.sourceAccount.toSettingsItem())
+                            HorizontalDivider()
+                            SettingsRow(state.destinationAccount.toSettingsItem())
+                        }
+                    }
 
                     HorizontalDivider()
 
-                    SettingsRow(state.destination)
-
-                    HorizontalDivider()
-
-                    SettingsRow(state.date)
+                    SettingsRow(state.date.toSettingsItem())
                 }
             }
 
