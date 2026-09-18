@@ -7,12 +7,12 @@ import com.ritesrport.core.designsystem.MyBalanceIcons
 import com.ritesrport.core.designsystem.icons.Bus
 import com.ritesrport.features.addtransaction.domain.TransactionType
 import com.ritesrport.features.addtransaction.presentation.mappers.toPresentation
-import java.util.Calendar
+import java.time.LocalDate
 
 @Stable
 sealed class AddTransactionState(
     open val amount: String,
-    open val date: Calendar,
+    open val date: LocalDate,
     open val note: String?,
     val transactionType: TransactionType,
     open val tags: List<String>
@@ -22,7 +22,7 @@ sealed class AddTransactionState(
         val sourceAccount: AccountModel,
         override val tags: List<String>,
         override val amount: String,
-        override val date: Calendar,
+        override val date: LocalDate,
         override val note: String?,
     ) : AddTransactionState(amount, date, note, TransactionType.EXPENSE, tags)
 
@@ -31,7 +31,7 @@ sealed class AddTransactionState(
         val destinationAccount: AccountModel,
         override val tags: List<String>,
         override val amount: String,
-        override val date: Calendar,
+        override val date: LocalDate,
         override val note: String?,
     ) : AddTransactionState(amount, date, note, TransactionType.INCOME, tags)
 
@@ -40,13 +40,13 @@ sealed class AddTransactionState(
         val destinationAccount: AccountModel,
         override val tags: List<String>,
         override val amount: String,
-        override val date: Calendar,
+        override val date: LocalDate,
         override val note: String?,
     ) : AddTransactionState(amount, date, note, TransactionType.TRANSFER, tags)
 
     fun copyState(
         amount: String = this.amount,
-        date: Calendar = this.date,
+        date: LocalDate = this.date,
         note: String? = this.note,
         tags: List<String> = this.tags
     ): AddTransactionState {
@@ -67,7 +67,7 @@ sealed class AddTransactionState(
                 defaultAccount.toPresentation(),
                 emptyList(),
                 "0", //TODO design
-                Calendar.getInstance(),
+                LocalDate.now(),
                 null
             )
         }
@@ -77,7 +77,7 @@ sealed class AddTransactionState(
             category: CategoryDTO,
             account: AccountDTO,
             amount: String = "0",
-            date: Calendar = Calendar.getInstance(),
+            date: LocalDate = LocalDate.now(),
             note: String? = null
         ): AddTransactionState {
             return when (type) {
@@ -115,7 +115,7 @@ val addTransactionStatePreview = AddTransactionState.Expense(
     sourceAccount = AccountModel(0, "Карта", MyBalanceIcons.Bus),
     tags = listOf("обед", "ресторан"),
     amount = "17.000",
-    date = Calendar.getInstance(),
+    date = LocalDate.now(),
     note = null,
 )
 

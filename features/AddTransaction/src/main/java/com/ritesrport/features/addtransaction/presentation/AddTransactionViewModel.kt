@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import java.util.Calendar
+import java.time.LocalDate
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -26,7 +26,7 @@ class AddTransactionViewModel @Inject constructor(
 
     private val _type = MutableStateFlow(TransactionType.EXPENSE)
     private val _amount = MutableStateFlow("0")
-    private val _date = MutableStateFlow(Calendar.getInstance())
+    private val _date = MutableStateFlow(LocalDate.now())
     private val _note = MutableStateFlow<String?>(null)
 
     val state: StateFlow<AddTransactionUiState> = combine(
