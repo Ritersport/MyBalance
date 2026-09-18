@@ -32,7 +32,6 @@ class TransactionRepository @Inject constructor(
         return when (this.transaction.type) {
             TransactionType.INCOME -> TransactionDTO.Income(
                 transaction.id,
-                transaction.title,
                 transaction.amount,
                 transaction.date,
                 sourceCategory?.toDTO() ?: return null,
@@ -42,7 +41,6 @@ class TransactionRepository @Inject constructor(
 
             TransactionType.EXPENSE -> TransactionDTO.Expense(
                 transaction.id,
-                transaction.title,
                 transaction.amount,
                 transaction.date,
                 sourceAccount?.toDTO() ?: return null,
@@ -52,7 +50,6 @@ class TransactionRepository @Inject constructor(
 
             TransactionType.TRANSFER -> TransactionDTO.Transfer(
                 transaction.id,
-                transaction.title,
                 transaction.amount,
                 transaction.date,
                 sourceAccount?.toDTO() ?: return null,
@@ -85,7 +82,6 @@ class TransactionRepository @Inject constructor(
     private fun TransactionDTO.Expense.toEntity(): TransactionEntity {
         return TransactionEntity(
             id,
-            title,
             TransactionType.EXPENSE,
             amount,
             date,
@@ -98,7 +94,6 @@ class TransactionRepository @Inject constructor(
     private fun TransactionDTO.Income.toEntity(): TransactionEntity {
         return TransactionEntity(
             id,
-            title,
             TransactionType.INCOME,
             amount,
             date,
@@ -111,7 +106,6 @@ class TransactionRepository @Inject constructor(
     private fun TransactionDTO.Transfer.toEntity(): TransactionEntity {
         return TransactionEntity(
             id,
-            title,
             TransactionType.TRANSFER,
             amount,
             date,

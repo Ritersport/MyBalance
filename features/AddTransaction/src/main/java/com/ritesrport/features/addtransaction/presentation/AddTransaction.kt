@@ -23,6 +23,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -48,12 +49,22 @@ fun AddTransactionScreen(
 ) {
     val uiState by viewModel.state.collectAsStateWithLifecycle()
 
+    LaunchedEffect(Unit) {
+        viewModel.navigationEvent.collect { event ->
+            when (event) {
+                AddTransactionNavigationEvent.Back -> onBack()
+            }
+        }
+    }
+
     when (val state = uiState) {
         is AddTransactionUiState.Success -> AddTransactionLayout(
             state = state.state,
             onBack = onBack,
             onTypeChanged = viewModel::onTypeChanged,
-            onNumberClick = viewModel::onNumberClick
+            onNumberClick = viewModel::onNumberClick,
+            onNoteChanged = viewModel::onNoteChanged,
+            onSaveClick = viewModel::onSaveClick
         )
         is AddTransactionUiState.Error -> TODO()
         AddTransactionUiState.Loading -> {
@@ -69,6 +80,8 @@ fun AddTransactionLayout(
     onBack: () -> Unit,
     onTypeChanged: (TransactionType) -> Unit,
     onNumberClick: (String) -> Unit,
+    onNoteChanged: (String) -> Unit,
+    onSaveClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -78,7 +91,7 @@ fun AddTransactionLayout(
             .imePadding()
     ) {
 
-        AddTransactionToolbar(onBackClick = onBack, onSaveClick = {})
+        AddTransactionToolbar(onBackClick = onBack, onSaveClick = onSaveClick)
 
         Column(
             modifier = modifier
@@ -139,9 +152,16 @@ fun AddTransactionLayout(
             Spacer(Modifier.height(MyBalanceTheme.spacing.medium))
 
             OutlinedTextField(
-                value = "Обед в ресторане",
-                onValueChange = {},
+                value = state.note ?: "",
+                onValueChange = onNoteChanged,
                 modifier = Modifier.fillMaxWidth(),
+                placeholder = {
+                    Text(
+                        "Комментарий",
+                        style = MyBalanceTheme.typography.description,
+                        color = MyBalanceTheme.colors.textSecondary.copy(alpha = 0.5f)
+                    )
+                },
                 label = {
                     Text(
                         "Заметка",
@@ -188,6 +208,8 @@ fun AddTransactionLayoutPreview(modifier: Modifier = Modifier) {
             onBack = {},
             onTypeChanged = {},
             onNumberClick = {},
+            onNoteChanged = {},
+            onSaveClick = {},
             modifier = modifier
         )
     }
@@ -202,6 +224,8 @@ fun AddTransactionLayoutPreviewDark(modifier: Modifier = Modifier) {
             onBack = {},
             onTypeChanged = {},
             onNumberClick = {},
+            onNoteChanged = {},
+            onSaveClick = {},
             modifier = modifier
         )
     }

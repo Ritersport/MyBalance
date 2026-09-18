@@ -8,7 +8,6 @@ import java.time.LocalDate
 @Entity
 data class TransactionEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
-    val title: String,
     val type: TransactionType,
     val amount: BigDecimal,
     val date: LocalDate,
