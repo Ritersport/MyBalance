@@ -44,19 +44,6 @@ sealed class AddTransactionState(
         override val note: String?,
     ) : AddTransactionState(amount, date, note, TransactionType.TRANSFER, tags)
 
-    fun copyState(
-        amount: String = this.amount,
-        date: LocalDate = this.date,
-        note: String? = this.note,
-        tags: List<String> = this.tags
-    ): AddTransactionState {
-        return when (this) {
-            is Expense -> this.copy(amount = amount, date = date, note = note, tags = tags)
-            is Income -> this.copy(amount = amount, date = date, note = note, tags = tags)
-            is Transfer -> this.copy(amount = amount, date = date, note = note, tags = tags)
-        }
-    }
-
     companion object {
         fun build(
             type: TransactionType,

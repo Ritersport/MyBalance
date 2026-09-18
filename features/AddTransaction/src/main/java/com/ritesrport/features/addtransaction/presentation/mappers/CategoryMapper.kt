@@ -5,5 +5,5 @@ import com.ritesrport.core.designsystem.MyBalanceIcons
 import com.ritesrport.features.addtransaction.presentation.model.CategoryModel
 
 fun CategoryDTO.toPresentation(): CategoryModel {
-    return CategoryModel(id, name, MyBalanceIcons.from(iconKey))
+    return CategoryModel(id, name, MyBalanceIcons.from(iconKey), isDefault)
 }

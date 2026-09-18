@@ -63,11 +63,11 @@ class TransactionRepository @Inject constructor(
     }
 
     private fun IncomeSourceEntity.toDTO(): CategoryDTO {
-        return CategoryDTO(id, name, IconKey.getFromValue(icon))
+        return CategoryDTO(id, name, IconKey.getFromValue(icon), isDefault)
     }
 
     private fun ExpenseCategoryEntity.toDTO(): CategoryDTO {
-        return CategoryDTO(id, name, IconKey.getFromValue(icon))
+        return CategoryDTO(id, name, IconKey.getFromValue(icon), isDefault)
     }
 
     private fun AccountEntity.toDTO(): AccountDTO {

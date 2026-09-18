@@ -5,12 +5,14 @@ import androidx.room.Room
 import com.ritesrport.core.database.data.dao.AccountDao
 import com.ritesrport.core.database.data.dao.CategoryDao
 import com.ritesrport.core.database.data.dao.TransactionDao
+import com.ritesrport.core.database.data.db.DefaultCategoriesProvider
 import com.ritesrport.core.database.data.db.MyBalanceDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Provider
 import javax.inject.Singleton
 import kotlin.jvm.java
 
@@ -34,11 +36,17 @@ class DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideAppDatabase(@ApplicationContext appContext: Context): MyBalanceDatabase {
+    fun provideAppDatabase(
+        @ApplicationContext appContext: Context,
+        categoryDaoProvider: Provider<CategoryDao>,
+        defaultCategoriesProvider: Provider<DefaultCategoriesProvider>
+    ): MyBalanceDatabase {
         return Room.databaseBuilder(
-            appContext,
-            MyBalanceDatabase::class.java,
-            "MyBalance"
-        ).build()
+                appContext, MyBalanceDatabase::class.java, "MyBalance"
+            ).addCallback(
+                MyBalanceDatabase.getCallback(
+                    categoryDaoProvider, defaultCategoriesProvider
+                )
+            ).build()
     }
 }

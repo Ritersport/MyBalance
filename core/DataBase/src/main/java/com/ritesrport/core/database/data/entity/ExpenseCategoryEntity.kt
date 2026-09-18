@@ -8,5 +8,6 @@ data class ExpenseCategoryEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long,
     val name: String,
-    val icon: String
+    val icon: String,
+    val isDefault: Boolean = false
 )

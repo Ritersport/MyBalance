@@ -14,6 +14,10 @@ object MyBalanceIcons {
   fun from(key: IconKey): ImageVector =
     when (key) {
       IconKey.Bus -> MyBalanceIcons.Bus
+      IconKey.ShoppingCart -> MyBalanceIcons.ShoppingCart
+      IconKey.Check -> MyBalanceIcons.Check
+      IconKey.Close -> MyBalanceIcons.Close
+      IconKey.DateRange -> MyBalanceIcons.DateRange
     }
 }
 
