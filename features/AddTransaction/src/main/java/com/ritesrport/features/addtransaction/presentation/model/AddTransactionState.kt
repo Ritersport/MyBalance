@@ -58,20 +58,6 @@ sealed class AddTransactionState(
     }
 
     companion object {
-        fun buildDefault(
-            defaultCategory: CategoryDTO,
-            defaultAccount: AccountDTO
-        ): Expense {
-            return Expense(
-                defaultCategory.toPresentation(),
-                defaultAccount.toPresentation(),
-                emptyList(),
-                "0", //TODO design
-                LocalDate.now(),
-                null
-            )
-        }
-
         fun build(
             type: TransactionType,
             category: CategoryDTO,

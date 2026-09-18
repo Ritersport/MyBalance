@@ -5,7 +5,6 @@ import com.ritesrport.core.designsystem.MyBalanceIcons
 import com.ritesrport.core.designsystem.formatters.toUserString
 import com.ritesrport.core.designsystem.icons.DateRange
 import java.time.LocalDate
-import java.util.Calendar
 
 data class SettingsItem(val icon: ImageVector, val title: String, val value: String)
 
