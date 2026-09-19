@@ -1,4 +1,4 @@
-package com.ritesrport.features.addtransaction.presentation.composables
+package com.ritesrport.items.settingsitem
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -18,15 +18,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.ritesrport.core.designsystem.MyBalanceIcons
 import com.ritesrport.core.designsystem.icons.ChevronRight
 import com.ritesrport.core.designsystem.theme.MyBalanceTheme
-import com.ritesrport.features.addtransaction.presentation.model.SettingsItem
-import com.ritesrport.features.addtransaction.presentation.model.settingsItemPreview
 
 @Composable
-fun SettingsRow(item: SettingsItem) {
+fun SettingsRow(
+    item: SettingsItem,
+    settingsInterface: SettingsInterface,
+) {
     Row(
         modifier = Modifier
+            .clickable { settingsInterface.onSettingsItemClick() }
             .fillMaxWidth()
-            .clickable {}
             .background(MyBalanceTheme.colors.surface)
             .padding(MyBalanceTheme.spacing.medium),
         verticalAlignment = Alignment.CenterVertically) {
@@ -69,7 +70,7 @@ fun SettingsRow(item: SettingsItem) {
 @Composable
 fun SettingsRowPreview() {
     MyBalanceTheme {
-        SettingsRow(settingsItemPreview)
+        SettingsRow(settingsItemPreview, settingsInterfacePreview)
     }
 }
 
@@ -77,6 +78,6 @@ fun SettingsRowPreview() {
 @Composable
 fun SettingsRowPreviewDark() {
     MyBalanceTheme(darkTheme = true) {
-        SettingsRow(settingsItemPreview)
+        SettingsRow(settingsItemPreview, settingsInterfacePreview)
     }
 }

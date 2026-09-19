@@ -22,7 +22,6 @@ import androidx.navigation3.ui.NavDisplay
 import com.ritesrport.features.addtransaction.presentation.AddTransactionScreen
 import com.ritesrport.transactionlist.presentation.TransactionListScreen
 
-
 @Composable
 fun MainScreen() {
     val transactionsBackStack = rememberNavBackStack(BottomNavKey.TransactionsList)

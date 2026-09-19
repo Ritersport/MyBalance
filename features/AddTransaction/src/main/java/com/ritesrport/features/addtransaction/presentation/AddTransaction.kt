@@ -31,16 +31,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.ritersport.sharedRepository.transactionRepository.dto.AccountDTO
+import com.ritersport.sharedRepository.transactionRepository.dto.CategoryDTO
 import com.ritesrport.core.designsystem.theme.MyBalanceTheme
 import com.ritesrport.features.addtransaction.domain.TransactionType
 import com.ritesrport.features.addtransaction.presentation.composables.AddTransactionToolbar
 import com.ritesrport.features.addtransaction.presentation.composables.NumberKeyboard
-import com.ritesrport.features.addtransaction.presentation.composables.SettingsRow
 import com.ritesrport.features.addtransaction.presentation.composables.TagChip
 import com.ritesrport.features.addtransaction.presentation.composables.TransactionTypeSelector
 import com.ritesrport.features.addtransaction.presentation.model.AddTransactionState
 import com.ritesrport.features.addtransaction.presentation.model.addTransactionStatePreview
 import com.ritesrport.features.addtransaction.presentation.model.toSettingsItem
+import com.ritesrport.items.settingsitem.SettingsRow
+import com.ritesrport.items.settingsitem.settingsInterfacePreview
 
 @Composable
 fun AddTransactionScreen(
@@ -127,25 +130,17 @@ fun AddTransactionLayout(
 
                     when (state) {
                         is AddTransactionState.Expense -> {
-                            SettingsRow(state.destinationCategory.toSettingsItem())
-                            HorizontalDivider()
-                            SettingsRow(state.sourceAccount.toSettingsItem())
+                            ExpenseLayout(state.destinationCategory, state.sourceAccount)
                         }
                         is AddTransactionState.Income -> {
-                            SettingsRow(state.sourceCategory.toSettingsItem())
-                            HorizontalDivider()
-                            SettingsRow(state.destinationAccount.toSettingsItem())
+                            IncomeLayout(state.sourceCategory, state.destinationAccount)
                         }
                         is AddTransactionState.Transfer -> {
-                            SettingsRow(state.sourceAccount.toSettingsItem())
-                            HorizontalDivider()
-                            SettingsRow(state.destinationAccount.toSettingsItem())
+                            TransferLayout(state.sourceAccount, state.destinationAccount)
                         }
                     }
-
                     HorizontalDivider()
-
-                    SettingsRow(state.date.toSettingsItem())
+                    SettingsRow(state.date.toSettingsItem(), settingsInterfacePreview)
                 }
             }
 
@@ -197,6 +192,27 @@ fun AddTransactionLayout(
             NumberKeyboard(onKeyClick = onNumberClick)
         }
     }
+}
+
+@Composable
+fun ExpenseLayout(destinationCategory: CategoryDTO, sourceAccount: AccountDTO) {
+    SettingsRow(destinationCategory.toSettingsItem(), settingsInterfacePreview)
+    HorizontalDivider()
+    SettingsRow(sourceAccount.toSettingsItem(), settingsInterfacePreview)
+}
+
+@Composable
+fun IncomeLayout(sourceCategory: CategoryDTO, destinationAccount: AccountDTO) {
+    SettingsRow(sourceCategory.toSettingsItem(), settingsInterfacePreview)
+    HorizontalDivider()
+    SettingsRow(destinationAccount.toSettingsItem(), settingsInterfacePreview)
+}
+
+@Composable
+fun TransferLayout(sourceAccount: AccountDTO, destinationAccount: AccountDTO) {
+    SettingsRow(sourceAccount.toSettingsItem(), settingsInterfacePreview)
+    HorizontalDivider()
+    SettingsRow(destinationAccount.toSettingsItem(), settingsInterfacePreview)
 }
 
 @Preview
