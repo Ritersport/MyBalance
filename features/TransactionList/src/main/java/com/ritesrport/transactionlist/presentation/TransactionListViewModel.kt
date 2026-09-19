@@ -59,11 +59,7 @@ class TransactionListViewModel @Inject constructor(
         val groups = filtered.groupBy { it.date }
             .map { (date, items) -> TransactionGroup(date, items) }
             .sortedByDescending { it.date }
-        if (groups.isEmpty()) {
-            _state.value = TransactionListUiState.Empty
-        } else {
-            _state.value = TransactionListUiState.Success(groups, currentFilter)
-        }
+        _state.value = TransactionListUiState.Success(groups, currentFilter)
     }
 
     override fun onTransactionCardClick(transactionId: Long) {
@@ -73,7 +69,6 @@ class TransactionListViewModel @Inject constructor(
 
 sealed interface TransactionListUiState {
     object Loading : TransactionListUiState
-    object Empty : TransactionListUiState
     data class Error(val throwable: Throwable) : TransactionListUiState
     data class Success(
         val groups: List<TransactionGroup>,

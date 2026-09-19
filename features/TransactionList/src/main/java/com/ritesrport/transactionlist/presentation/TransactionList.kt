@@ -51,15 +51,17 @@ fun TransactionListLayout(
             TransactionListUiState.Loading -> Box(Modifier.fillMaxSize()) {
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
             }
-
-            is TransactionListUiState.Empty -> TransactionListEmptyLayout()
             is TransactionListUiState.Success -> {
                 TransactionTypeFilterRow(
                     selectedFilter = state.currentFilter, onFilterSelected = onFilterSelected
                 )
-                TransactionList(
-                    groups = state.groups, transactionCardInterface = transactionCardInterface
-                )
+                if (state.groups.isNotEmpty()) {
+                    TransactionList(
+                        groups = state.groups, transactionCardInterface = transactionCardInterface
+                    )
+                } else {
+                    TransactionListEmptyLayout()
+                }
             }
         }
     }
@@ -90,16 +92,6 @@ fun TransactionList(
         }
     }
 }
-
-
-@Preview
-@Composable
-fun TransactionListLayoutPreviewEmpty() {
-    MyBalanceTheme {
-        TransactionListLayout(TransactionListUiState.Empty, transactionInterfacePreview) {}
-    }
-}
-
 
 @Preview
 @Composable
