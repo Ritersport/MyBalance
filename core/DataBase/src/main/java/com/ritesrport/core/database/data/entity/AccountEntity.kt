@@ -9,6 +9,6 @@ data class AccountEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long,
     val name: String,
-    val balance: BigDecimal?,
+    val initialBalance: BigDecimal,
     val icon: String
 )

@@ -42,6 +42,7 @@ import com.ritesrport.features.addtransaction.presentation.composables.Transacti
 import com.ritesrport.features.addtransaction.presentation.model.AddTransactionState
 import com.ritesrport.features.addtransaction.presentation.model.addTransactionStatePreview
 import com.ritesrport.features.addtransaction.presentation.model.toSettingsItem
+import com.ritesrport.items.settingsitem.SettingsInterface
 import com.ritesrport.items.settingsitem.SettingsRow
 import com.ritesrport.items.settingsitem.settingsInterfacePreview
 
@@ -56,6 +57,10 @@ fun AddTransactionScreen(
         viewModel.navigationEvent.collect { event ->
             when (event) {
                 AddTransactionNavigationEvent.Back -> onBack()
+                AddTransactionNavigationEvent.SelectDestinationAccount -> TODO()
+                AddTransactionNavigationEvent.SelectExpenseCategory -> TODO()
+                AddTransactionNavigationEvent.SelectIncomeCategory -> TODO()
+                AddTransactionNavigationEvent.SelectSourceAccount -> TODO()
             }
         }
     }
@@ -67,8 +72,13 @@ fun AddTransactionScreen(
             onTypeChanged = viewModel::onTypeChanged,
             onNumberClick = viewModel::onNumberClick,
             onNoteChanged = viewModel::onNoteChanged,
+            onExpenseCategoryClick = viewModel::onExpenseCategoryClick,
+            onIncomeCategoryClick = viewModel::onIncomeCategoryClick,
+            onSourceAccountClick = viewModel::onSourceAccountClick,
+            onDestinationAccountClick = viewModel::onDestinationAccountClick,
             onSaveClick = viewModel::onSaveClick
         )
+
         is AddTransactionUiState.Error -> TODO()
         AddTransactionUiState.Loading -> {
             Text("Loading")
@@ -85,7 +95,11 @@ fun AddTransactionLayout(
     onNumberClick: (String) -> Unit,
     onNoteChanged: (String) -> Unit,
     onSaveClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onExpenseCategoryClick: () -> Unit = {},
+    onIncomeCategoryClick: () -> Unit = {},
+    onSourceAccountClick: () -> Unit = {},
+    onDestinationAccountClick: () -> Unit = {}
 ) {
     Column(
         modifier = Modifier
@@ -108,8 +122,7 @@ fun AddTransactionLayout(
             val transactionType = state.transactionType
 
             TransactionTypeSelector(
-                selected = transactionType,
-                onSelected = onTypeChanged
+                selected = transactionType, onSelected = onTypeChanged
             )
 
             Text(
@@ -130,13 +143,30 @@ fun AddTransactionLayout(
 
                     when (state) {
                         is AddTransactionState.Expense -> {
-                            ExpenseLayout(state.destinationCategory, state.sourceAccount)
+                            ExpenseLayout(
+                                destinationCategory = state.destinationCategory,
+                                sourceAccount = state.sourceAccount,
+                                onCategoryClicked = onExpenseCategoryClick,
+                                onAccountClicked = onSourceAccountClick
+                            )
                         }
+
                         is AddTransactionState.Income -> {
-                            IncomeLayout(state.sourceCategory, state.destinationAccount)
+                            IncomeLayout(
+                                sourceCategory = state.sourceCategory,
+                                destinationAccount = state.destinationAccount,
+                                onCategoryClicked = onIncomeCategoryClick,
+                                onAccountClicked = onDestinationAccountClick
+                            )
                         }
+
                         is AddTransactionState.Transfer -> {
-                            TransferLayout(state.sourceAccount, state.destinationAccount)
+                            TransferLayout(
+                                sourceAccount = state.sourceAccount,
+                                destinationAccount = state.destinationAccount,
+                                onSourceAccountClicked = onSourceAccountClick,
+                                onDestinationAccountClicked = onDestinationAccountClick
+                            )
                         }
                     }
                     HorizontalDivider()
@@ -195,24 +225,63 @@ fun AddTransactionLayout(
 }
 
 @Composable
-fun ExpenseLayout(destinationCategory: CategoryDTO, sourceAccount: AccountDTO) {
-    SettingsRow(destinationCategory.toSettingsItem(), settingsInterfacePreview)
+fun ExpenseLayout(
+    destinationCategory: CategoryDTO,
+    sourceAccount: AccountDTO,
+    onCategoryClicked: () -> Unit,
+    onAccountClicked: () -> Unit
+) {
+    SettingsRow(destinationCategory.toSettingsItem(), object : SettingsInterface {
+        override fun onSettingsItemClick() {
+            onCategoryClicked()
+        }
+    })
     HorizontalDivider()
-    SettingsRow(sourceAccount.toSettingsItem(), settingsInterfacePreview)
+    SettingsRow(sourceAccount.toSettingsItem(), object : SettingsInterface {
+        override fun onSettingsItemClick() {
+            onAccountClicked()
+        }
+    })
 }
 
 @Composable
-fun IncomeLayout(sourceCategory: CategoryDTO, destinationAccount: AccountDTO) {
-    SettingsRow(sourceCategory.toSettingsItem(), settingsInterfacePreview)
+fun IncomeLayout(
+    sourceCategory: CategoryDTO,
+    destinationAccount: AccountDTO,
+    onCategoryClicked: () -> Unit,
+    onAccountClicked: () -> Unit
+) {
+    SettingsRow(sourceCategory.toSettingsItem(), object : SettingsInterface {
+        override fun onSettingsItemClick() {
+            onCategoryClicked()
+        }
+    })
     HorizontalDivider()
-    SettingsRow(destinationAccount.toSettingsItem(), settingsInterfacePreview)
+    SettingsRow(destinationAccount.toSettingsItem(), object : SettingsInterface {
+        override fun onSettingsItemClick() {
+            onAccountClicked()
+        }
+    })
 }
 
 @Composable
-fun TransferLayout(sourceAccount: AccountDTO, destinationAccount: AccountDTO) {
-    SettingsRow(sourceAccount.toSettingsItem(), settingsInterfacePreview)
+fun TransferLayout(
+    sourceAccount: AccountDTO,
+    destinationAccount: AccountDTO,
+    onSourceAccountClicked: () -> Unit,
+    onDestinationAccountClicked: () -> Unit
+) {
+    SettingsRow(sourceAccount.toSettingsItem(), object : SettingsInterface {
+        override fun onSettingsItemClick() {
+            onSourceAccountClicked()
+        }
+    })
     HorizontalDivider()
-    SettingsRow(destinationAccount.toSettingsItem(), settingsInterfacePreview)
+    SettingsRow(destinationAccount.toSettingsItem(), object : SettingsInterface {
+        override fun onSettingsItemClick() {
+            onDestinationAccountClicked()
+        }
+    })
 }
 
 @Preview

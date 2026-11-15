@@ -53,7 +53,7 @@ class AddTransactionInteractor @Inject constructor(
         }
     }
 
-    private fun AccountEntity.toDTO() = AccountDTO(id, name, IconKey.getFromValue(icon), balance?.toDouble() ?: 0.0)
+    private fun AccountEntity.toDTO() = AccountDTO(id, name, IconKey.getFromValue(icon), initialBalance.toDouble())
     private fun ExpenseCategoryEntity.toDTO() = CategoryDTO(id, name, IconKey.getFromValue(icon))
     private fun IncomeSourceEntity.toDTO() = CategoryDTO(id, name, IconKey.getFromValue(icon))
 }

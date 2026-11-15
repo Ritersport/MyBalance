@@ -81,6 +81,30 @@ class AddTransactionViewModel @Inject constructor(
         _note.value = note.takeIf { it.isNotEmpty() }
     }
 
+    fun onExpenseCategoryClick() {
+        viewModelScope.launch {
+            _navigationEvent.emit(AddTransactionNavigationEvent.SelectExpenseCategory)
+        }
+    }
+
+    fun onIncomeCategoryClick() {
+        viewModelScope.launch {
+            _navigationEvent.emit(AddTransactionNavigationEvent.SelectIncomeCategory)
+        }
+    }
+
+    fun onSourceAccountClick() {
+        viewModelScope.launch {
+            _navigationEvent.emit(AddTransactionNavigationEvent.SelectSourceAccount)
+        }
+    }
+
+    fun onDestinationAccountClick() {
+        viewModelScope.launch {
+            _navigationEvent.emit(AddTransactionNavigationEvent.SelectDestinationAccount)
+        }
+    }
+
     fun onSaveClick() {
         val uiState = state.value
         if (uiState is AddTransactionUiState.Success) {
@@ -121,6 +145,10 @@ class AddTransactionViewModel @Inject constructor(
 
 sealed interface AddTransactionNavigationEvent {
     data object Back : AddTransactionNavigationEvent
+    data object SelectExpenseCategory : AddTransactionNavigationEvent
+    data object SelectIncomeCategory : AddTransactionNavigationEvent
+    data object SelectSourceAccount : AddTransactionNavigationEvent
+    data object SelectDestinationAccount : AddTransactionNavigationEvent
 }
 
 sealed interface AddTransactionUiState {
