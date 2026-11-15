@@ -18,13 +18,18 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -46,38 +51,123 @@ import com.ritesrport.items.settingsitem.SettingsInterface
 import com.ritesrport.items.settingsitem.SettingsRow
 import com.ritesrport.items.settingsitem.settingsInterfacePreview
 
+enum class ScreenState {
+    MAIN,
+    DESTINATION_ACCOUNT,
+    SOURCE_ACCOUNT,
+    INCOME_CATEGORY,
+    EXPENSE_CATEGORY
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddTransactionScreen(
     onBack: () -> Unit,
     viewModel: AddTransactionViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.state.collectAsStateWithLifecycle()
+    val accounts by viewModel.accounts.collectAsStateWithLifecycle()
+    val expenseCategories by viewModel.expenseCategories.collectAsStateWithLifecycle()
+    val incomeCategories by viewModel.incomeCategories.collectAsStateWithLifecycle()
+    var screenState by rememberSaveable { mutableStateOf(ScreenState.MAIN) }
 
     LaunchedEffect(Unit) {
         viewModel.navigationEvent.collect { event ->
             when (event) {
                 AddTransactionNavigationEvent.Back -> onBack()
-                AddTransactionNavigationEvent.SelectDestinationAccount -> TODO()
-                AddTransactionNavigationEvent.SelectExpenseCategory -> TODO()
-                AddTransactionNavigationEvent.SelectIncomeCategory -> TODO()
-                AddTransactionNavigationEvent.SelectSourceAccount -> TODO()
+                AddTransactionNavigationEvent.SelectDestinationAccount -> {
+                    screenState = ScreenState.DESTINATION_ACCOUNT
+                }
+
+                AddTransactionNavigationEvent.SelectExpenseCategory -> {
+                    screenState = ScreenState.EXPENSE_CATEGORY
+                }
+
+                AddTransactionNavigationEvent.SelectIncomeCategory -> {
+                    screenState = ScreenState.INCOME_CATEGORY
+                }
+
+                AddTransactionNavigationEvent.SelectSourceAccount -> {
+                    screenState = ScreenState.SOURCE_ACCOUNT
+                }
             }
         }
     }
 
     when (val state = uiState) {
-        is AddTransactionUiState.Success -> AddTransactionLayout(
-            state = state.state,
-            onBack = onBack,
-            onTypeChanged = viewModel::onTypeChanged,
-            onNumberClick = viewModel::onNumberClick,
-            onNoteChanged = viewModel::onNoteChanged,
-            onExpenseCategoryClick = viewModel::onExpenseCategoryClick,
-            onIncomeCategoryClick = viewModel::onIncomeCategoryClick,
-            onSourceAccountClick = viewModel::onSourceAccountClick,
-            onDestinationAccountClick = viewModel::onDestinationAccountClick,
-            onSaveClick = viewModel::onSaveClick
-        )
+        is AddTransactionUiState.Success -> {
+            AddTransactionLayout(
+                state = state.state,
+                onBack = onBack,
+                onTypeChanged = viewModel::onTypeChanged,
+                onNumberClick = viewModel::onNumberClick,
+                onNoteChanged = viewModel::onNoteChanged,
+                onExpenseCategoryClick = viewModel::onExpenseCategoryClick,
+                onIncomeCategoryClick = viewModel::onIncomeCategoryClick,
+                onSourceAccountClick = viewModel::onSourceAccountClick,
+                onDestinationAccountClick = viewModel::onDestinationAccountClick,
+                onSaveClick = viewModel::onSaveClick
+            )
+            when (screenState) {
+                ScreenState.MAIN -> Unit
+
+                ScreenState.DESTINATION_ACCOUNT -> ModalBottomSheet({
+                    screenState = ScreenState.MAIN
+                }) {
+                    SelectAccountScreen(
+                        "Выбор счёта",
+                        accounts,
+                        {
+                            viewModel.onDestinationAccountSelected(it)
+                            screenState = ScreenState.MAIN
+                        },
+                        {
+                            screenState = ScreenState.MAIN
+                        })
+                }
+
+                ScreenState.INCOME_CATEGORY -> ModalBottomSheet({
+                    screenState = ScreenState.MAIN
+                }) {
+                    SelectCategoryScreen(
+                        "Выбор категрии дохода",
+                        incomeCategories,
+                        {
+                            viewModel.onIncomeCategorySelected(it)
+                            screenState = ScreenState.MAIN
+                        },
+                        { screenState = ScreenState.MAIN })
+                }
+
+                ScreenState.EXPENSE_CATEGORY -> ModalBottomSheet({
+                    screenState = ScreenState.MAIN
+                }) {
+                    SelectCategoryScreen(
+                        "Выбор категрии дохода",
+                        expenseCategories,
+                        {
+                            viewModel.onExpenseCategorySelected(it)
+                            screenState = ScreenState.MAIN
+                        },
+                        { screenState = ScreenState.MAIN })
+                }
+
+                ScreenState.SOURCE_ACCOUNT -> ModalBottomSheet({
+                    screenState = ScreenState.MAIN
+                }) {
+                    SelectAccountScreen(
+                        "Выбор счёта",
+                        accounts,
+                        {
+                            viewModel.onSourceAccountSelected(it)
+                            screenState = ScreenState.MAIN
+                        },
+                        {
+                            screenState = ScreenState.MAIN
+                        })
+                }
+            }
+        }
 
         is AddTransactionUiState.Error -> TODO()
         AddTransactionUiState.Loading -> {

@@ -14,31 +14,29 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ritersport.sharedRepository.transactionRepository.dto.AccountDTO
 import com.ritesrport.core.designsystem.MyBalanceIcons
 import com.ritesrport.core.designsystem.icons.Close
 import com.ritesrport.core.designsystem.theme.MyBalanceTheme
+import com.ritesrport.core.model.IconKey
 import com.ritesrport.features.addtransaction.presentation.model.toSettingsItem
 import com.ritesrport.items.settingsitem.SettingsInterface
 import com.ritesrport.items.settingsitem.SettingsRow
-import kotlinx.coroutines.flow.StateFlow
 
 @Composable
 fun SelectAccountScreen(
     title: String,
-    accountsFlow: StateFlow<List<AccountDTO>>,
+    accounts: List<AccountDTO>,
     onAccountSelected: (AccountDTO) -> Unit,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    val accounts by accountsFlow.collectAsStateWithLifecycle()
-
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(MyBalanceTheme.colors.background)
     ) {
@@ -83,5 +81,22 @@ fun SelectAccountScreen(
                 HorizontalDivider()
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun SelectAccountScreenPreview() {
+    MyBalanceTheme {
+        SelectAccountScreen(
+            title = "Счет списания",
+            accounts = listOf(
+                AccountDTO(id = 1, name = "Основной счет", iconKey = IconKey.Bus, balance = 15000.0),
+                AccountDTO(id = 2, name = "Сберегательный", iconKey = IconKey.Bus, balance = 50000.0),
+                AccountDTO(id = 3, name = "Наличные", iconKey = IconKey.Bus, balance = 2300.0)
+            ),
+            onAccountSelected = {},
+            onBack = {}
+        )
     }
 }

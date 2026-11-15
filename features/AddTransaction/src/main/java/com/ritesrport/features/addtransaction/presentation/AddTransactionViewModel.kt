@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.ritesrport.features.addtransaction.domain.AddTransactionInteractor
 import com.ritesrport.features.addtransaction.domain.TransactionType
 import com.ritesrport.features.addtransaction.presentation.model.AddTransactionState
+import com.ritersport.sharedRepository.transactionRepository.dto.AccountDTO
+import com.ritersport.sharedRepository.transactionRepository.dto.CategoryDTO
 import com.ritersport.sharedRepository.transactionRepository.dto.TransactionDTO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -35,28 +37,92 @@ class AddTransactionViewModel @Inject constructor(
     private val _date = MutableStateFlow(LocalDate.now())
     private val _note = MutableStateFlow<String?>(null)
 
+    private val _selectedExpenseCategory = MutableStateFlow<CategoryDTO?>(null)
+    private val _selectedIncomeCategory = MutableStateFlow<CategoryDTO?>(null)
+    private val _selectedSourceAccount = MutableStateFlow<AccountDTO?>(null)
+    private val _selectedDestinationAccount = MutableStateFlow<AccountDTO?>(null)
+
+    val expenseCategories: StateFlow<List<CategoryDTO>> = transactionInteractor.getExpenseCategories()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = emptyList()
+        )
+
+    val incomeCategories: StateFlow<List<CategoryDTO>> = transactionInteractor.getIncomeSources()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = emptyList()
+        )
+
+    val accounts: StateFlow<List<AccountDTO>> = transactionInteractor.getAccounts()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = emptyList()
+        )
+
     private val _navigationEvent = MutableSharedFlow<AddTransactionNavigationEvent>()
     val navigationEvent: SharedFlow<AddTransactionNavigationEvent> = _navigationEvent.asSharedFlow()
 
     val state: StateFlow<AddTransactionUiState> = combine(
+        combine(
+            _type,
+            _amount,
+            _date,
+            _note
+        ) { type, amount, date, note ->
+            CommonFormFields(type, amount, date, note)
+        },
         _type.flatMapLatest { type ->
             transactionInteractor.getDefaultDataFlow(type).map { type to it }
         },
-        _amount,
-        _date,
-        _note
-    ) { (type, data), amount, date, note ->
-        val (category, account) = data
-        AddTransactionUiState.Success(
-            AddTransactionState.build(
-                type = type,
-                category = category,
-                account = account,
-                amount = amount,
-                date = date,
-                note = note
+        combine(
+            _selectedExpenseCategory,
+            _selectedIncomeCategory,
+            _selectedSourceAccount,
+            _selectedDestinationAccount
+        ) { expCat, incCat, srcAcc, dstAcc ->
+            UserSelections(expCat, incCat, srcAcc, dstAcc)
+        }
+    ) { common, (_, defaultData), selections ->
+        val (defaultCategory, defaultAccount) = defaultData
+        val finalExpenseCategory = selections.expenseCategory ?: defaultCategory
+        val finalIncomeCategory = selections.incomeCategory ?: defaultCategory
+        val finalSourceAccount = selections.sourceAccount ?: defaultAccount
+        val finalDestinationAccount = selections.destinationAccount ?: defaultAccount
+
+        val transactionState = when (common.type) {
+            TransactionType.EXPENSE -> AddTransactionState.Expense(
+                destinationCategory = finalExpenseCategory,
+                sourceAccount = finalSourceAccount,
+                tags = emptyList(),
+                amount = common.amount,
+                date = common.date,
+                note = common.note
             )
-        )
+
+            TransactionType.INCOME -> AddTransactionState.Income(
+                sourceCategory = finalIncomeCategory,
+                destinationAccount = finalDestinationAccount,
+                tags = emptyList(),
+                amount = common.amount,
+                date = common.date,
+                note = common.note
+            )
+
+            TransactionType.TRANSFER -> AddTransactionState.Transfer(
+                sourceAccount = finalSourceAccount,
+                destinationAccount = finalDestinationAccount,
+                tags = emptyList(),
+                amount = common.amount,
+                date = common.date,
+                note = common.note
+            )
+        }
+
+        AddTransactionUiState.Success(transactionState)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
@@ -105,6 +171,22 @@ class AddTransactionViewModel @Inject constructor(
         }
     }
 
+    fun onExpenseCategorySelected(category: CategoryDTO) {
+        _selectedExpenseCategory.value = category
+    }
+
+    fun onIncomeCategorySelected(category: CategoryDTO) {
+        _selectedIncomeCategory.value = category
+    }
+
+    fun onSourceAccountSelected(account: AccountDTO) {
+        _selectedSourceAccount.value = account
+    }
+
+    fun onDestinationAccountSelected(account: AccountDTO) {
+        _selectedDestinationAccount.value = account
+    }
+
     fun onSaveClick() {
         val uiState = state.value
         if (uiState is AddTransactionUiState.Success) {
@@ -141,6 +223,20 @@ class AddTransactionViewModel @Inject constructor(
             }
         }
     }
+
+    private data class CommonFormFields(
+        val type: TransactionType,
+        val amount: String,
+        val date: LocalDate,
+        val note: String?
+    )
+
+    private data class UserSelections(
+        val expenseCategory: CategoryDTO?,
+        val incomeCategory: CategoryDTO?,
+        val sourceAccount: AccountDTO?,
+        val destinationAccount: AccountDTO?
+    )
 }
 
 sealed interface AddTransactionNavigationEvent {

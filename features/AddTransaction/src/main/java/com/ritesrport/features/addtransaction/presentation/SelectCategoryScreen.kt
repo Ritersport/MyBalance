@@ -14,31 +14,29 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ritersport.sharedRepository.transactionRepository.dto.CategoryDTO
 import com.ritesrport.core.designsystem.MyBalanceIcons
 import com.ritesrport.core.designsystem.icons.Close
 import com.ritesrport.core.designsystem.theme.MyBalanceTheme
+import com.ritesrport.core.model.IconKey
 import com.ritesrport.features.addtransaction.presentation.model.toSettingsItem
 import com.ritesrport.items.settingsitem.SettingsInterface
 import com.ritesrport.items.settingsitem.SettingsRow
-import kotlinx.coroutines.flow.StateFlow
 
 @Composable
 fun SelectCategoryScreen(
     title: String,
-    categoriesFlow: StateFlow<List<CategoryDTO>>,
+    categories: List<CategoryDTO>,
     onCategorySelected: (CategoryDTO) -> Unit,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    val categories by categoriesFlow.collectAsStateWithLifecycle()
-
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(MyBalanceTheme.colors.background)
     ) {
@@ -83,5 +81,22 @@ fun SelectCategoryScreen(
                 HorizontalDivider()
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun SelectCategoryScreenPreview() {
+    MyBalanceTheme {
+        SelectCategoryScreen(
+            title = "Категория расхода",
+            categories = listOf(
+                CategoryDTO(id = 1, name = "Продукты", iconKey = IconKey.Bus),
+                CategoryDTO(id = 2, name = "Кафе и рестораны", iconKey = IconKey.Bus),
+                CategoryDTO(id = 3, name = "Транспорт", iconKey = IconKey.Bus)
+            ),
+            onCategorySelected = {},
+            onBack = {}
+        )
     }
 }

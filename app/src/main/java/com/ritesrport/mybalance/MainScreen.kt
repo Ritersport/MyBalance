@@ -45,7 +45,7 @@ fun MainScreen() {
                     TransactionListScreen()
                 }
                 entry<BottomNavKey.AddTransaction> {
-                    AddTransactionScreen({currentKey = BottomNavKey.TransactionsList})
+                    AddTransactionScreen({ currentKey = BottomNavKey.TransactionsList })
                 }
             },
             transitionSpec = { EnterTransition.None togetherWith ExitTransition.None },
@@ -53,8 +53,7 @@ fun MainScreen() {
             predictivePopTransitionSpec = { EnterTransition.None togetherWith ExitTransition.None }
         )
 
-        if (currentKey.showBottomBar)
-        {
+        if (currentKey.showBottomBar) {
             NavigationBar {
                 BottomNavKey.items.forEach { key ->
                     val label = key.label
